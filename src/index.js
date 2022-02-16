@@ -1,15 +1,24 @@
 import Phaser from 'phaser';
 
 import roundButtons from './assets/buttons-round-200x201.png'
-import flames from './assets/particles/flames.png';
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
+import sparklePng from './assets/particles/sparkle1.png'
 import { connect } from './wallet';
 
 const BUTTON_FRAMES = {
     INACTIVE: 8,
     CONNECTING: 4,
     CONNECTED: 6,
+};
+
+const emitterProps = {
+    blendMode: 'SCREEN',
+    scale: { start: 0.15, end: 0.0015 },
+    speed: { min: -100, max: 100 },
+    quantity: 1,
+    lifespan: { min: 1000, max: 4000 },
+    maxParticles: 100,
 };
 
 class WalletConnect extends Phaser.Scene {
@@ -29,11 +38,7 @@ class WalletConnect extends Phaser.Scene {
             endFrame: 9,
         });
         this.load.atlas('flares', flares, flaresJson);
-        this.load.spritesheet('flames', flames, {
-            frameWidth: 128,
-            frameHeight: 128,
-            endFrame: 1,
-        });
+        this.load.image('spark', sparklePng);
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
     }
 
@@ -41,21 +46,32 @@ class WalletConnect extends Phaser.Scene {
         const { width, height } = this.scale;
         console.log('width', width, 'height', height);
         const boardOutline = this.add.rectangle(0, 0, width - 100, height - 150, 0xffff44);
-        const flames = this.add.particles('flames');
-        const flameBorderEmitter = flames.createEmitter({
-            frame: { frames: [0, 1], cycle: true },
-            x: { min: 50, max: width - 50 },
-            y: { min: height - 50, max: height - 20 },
-            blendMode: 'ADD',
-            scale: { start: 0.5, end: 0.0015 },
-            speed: { min: -100, max: 100 },
-            quantity: 1,
+        const sparks = this.add.particles('spark');
+        sparks.createEmitter({
+            x: 70,
+            y: 100,
             emitZone: {
-                source: new Phaser.Geom.Line(0, 0, 10, 0),
-                quantity: 1,
+                source: new Phaser.Geom.Line(0, 0, 1, 0),
+                quantity: 10,
                 type: 'edge',
                 yoyo: false,
             },
+            gravityY: 200,
+            gravityX: 400,
+            ...emitterProps,
+        });
+        sparks.createEmitter({
+            x: width - 70,
+            y: 100,
+            emitZone: {
+                source: new Phaser.Geom.Line(0, 0, 1, 0),
+                quantity: 10,
+                type: 'edge',
+                yoyo: false,
+            },
+            gravityY: 200,
+            gravityX: -400,
+            ...emitterProps,
         });
         boardOutline.setOrigin(0, 0);
         boardOutline.setFillStyle(0x888888, 0.5);
@@ -87,7 +103,7 @@ class WalletConnect extends Phaser.Scene {
                 families: ['Nosifer']
             },
             active: () => {
-                this.add.text(48, 50, 'Raid at Moloch Central', { fontFamily: 'Nosifer', fontSize: '64px', fill: '#ff3434' });
+                this.add.text(48, 62, 'Raid at Moloch Central', { fontFamily: 'Nosifer', fontSize: '48px', fill: '#ff3864' });
             }
         });
     }
