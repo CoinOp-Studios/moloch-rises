@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { TILEHEIGHT, TILEWIDTH, INPUT} from './dungeonScene';
+import { TILEHEIGHT, TILEWIDTH, INPUT } from './dungeonScene';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame) {
