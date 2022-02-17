@@ -84,7 +84,7 @@ class WalletConnect extends Phaser.Scene {
         this.sprites.wallet = wallet;
         const particles = this.add.particles('flares');
         const buttonEmitter = particles.createEmitter({
-            frame: { frames: ['blue', 'yellow'], cycle: true },
+            frame: { frames: ['red', 'yellow'], cycle: true },
             x: width - 50,
             y: 50,
             blendMode: 'ADD',
