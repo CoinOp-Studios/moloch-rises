@@ -5,6 +5,7 @@ import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
 import { connect } from './wallet';
+import { DungeonScene } from './dungeonScene';
 
 const BUTTON_FRAMES = {
     INACTIVE: 8,
@@ -171,4 +172,20 @@ const config = {
     scene: WalletConnect,
 };
 
-const game = new Phaser.Game(config);
+const phaserConfig = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+    backgroundColor: '#2d2d2d',
+    parent: 'phaser-example',
+    pixelArt: true,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 }
+        }
+    },
+    scene: [ DungeonScene ]
+};
+
+const game = new Phaser.Game(phaserConfig);
