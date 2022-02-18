@@ -23,8 +23,20 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg|xml|csv)$/i,
         use: "file-loader"
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          "postcss-loader",
+        ],
       }
     ]
+  },
+  devServer: {
+    watchContentBase: true,
+    contentBase: path.resolve(__dirname, "dist"),
   },
   plugins: [
     new CleanWebpackPlugin({
@@ -36,6 +48,19 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./index.html"
-    })
-  ]
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+      Buffer: ['buffer', 'Buffer'],
+    }),
+  ],
+  resolve: {
+    fallback: {
+      "assert": require.resolve("assert/"),
+      "stream": require.resolve("stream-browserify"),
+      "os": require.resolve("os-browserify/browser"),
+      "https": require.resolve("https-browserify"),
+      "http": require.resolve("stream-http"),
+    }
+  }
 };

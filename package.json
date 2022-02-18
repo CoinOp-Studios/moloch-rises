@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "build": "webpack --config webpack/prod.js ",
-    "start": "webpack-dev-server --config webpack/base.js"
+    "start": "webpack serve --config webpack/base.js",
+    "css": "npx tailwindcss -i ./src/assets/main.css -o ./dist/main.css"
   },
   "author": "Bruce Dev <0xbigbee@protonmail.com> (http://artful.one)",
   "license": "MIT",
@@ -13,23 +14,36 @@
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
+    "autoprefixer": "^10.4.2",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
-    "file-loader": "^4.2.0",
-    "html-webpack-plugin": "^3.2.0",
-    "raw-loader": "^3.1.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "postcss": "^8.4.6",
+    "postcss-loader": "^6.2.1",
+    "raw-loader": "^4.0.2",
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.0.23",
     "terser-webpack-plugin": "^2.2.1",
-    "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.10",
+    "webpack": "^5.69.1",
+    "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^3.9.0",
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@walletconnect/web3-provider": "^1.7.1",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
     "core-js": "^3.21.0",
+    "css-loader": "^6.6.0",
     "ethers": "^5.5.4",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
     "phaser": "^3.50.0",
+    "process": "^0.11.10",
     "regenerator-runtime": "^0.13.9",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
     "web3modal": "^1.9.5"
   }
 }
