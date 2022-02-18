@@ -1,6 +1,6 @@
 {
-  "name": "Raid on Moloch",
-  "version": "0.0.1",
+  "name": "moloch-rises",
+  "version": "0.1.0",
   "description": "A Web3 Game",
   "main": "src/index.js",
   "scripts": {
