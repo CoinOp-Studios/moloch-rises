@@ -64,7 +64,7 @@ export class DungeonScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.player = new Player(this, 50, 100, 'player', 1);
+        this.player = new Player(this, 3, 0, 'player', 1);
 
         // Set up the player to collide with the tilemap layer. Alternatively, you can manually run
         // collisions in update via: this.physics.world.collide(player, layer).
@@ -125,7 +125,7 @@ export class DungeonScene extends Phaser.Scene {
             }
         }
 
-        this.player.update(input);
+        this.player.update(input, this);
 
         // update enemies with player position
 
