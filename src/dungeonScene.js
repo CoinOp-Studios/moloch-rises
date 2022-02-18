@@ -4,10 +4,12 @@ import { Player } from './player';
 import defaultTileset from "./assets/tilemaps/tiles/catastrophi_tiles_16.png"
 import tilemapCsv from "./assets/tilemaps/csv/catastrophi_level2.csv"
 import defaultPlayerSpritesheet from "./assets/sprites/spaceman.png"
+import { Enemy } from './enemy';
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
 export const TILEWIDTH = 16;
 export const TILEHEIGHT = 16;
+export const NUM_ENEMIES = 3;
 
 export class DungeonScene extends Phaser.Scene {
     constructor(config) {
@@ -21,7 +23,13 @@ export class DungeonScene extends Phaser.Scene {
         this.lastInputTime = 0;
         this.lastInput = 0;
         this.minInputDelayMs = 50;
+
+        // game objects with collision which need to
+        // check for one another
+        this.collidingGameObjects = [];
+        this.enemies = [];
     }
+
 
     preload() {
         this.load.image('tiles', defaultTileset);
@@ -39,32 +47,17 @@ export class DungeonScene extends Phaser.Scene {
         
         this.map.setCollisionBetween(54, 83);
 
-        this.anims.create({
-            key: 'left',
-            frames: this.anims.generateFrameNumbers('player', { start: 8, end: 9 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'right',
-            frames: this.anims.generateFrameNumbers('player', { start: 1, end: 2 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'up',
-            frames: this.anims.generateFrameNumbers('player', { start: 11, end: 13 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'down',
-            frames: this.anims.generateFrameNumbers('player', { start: 4, end: 6 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
+        // spawn sprites
         this.player = new Player(this, 3, 0, 'player', 1);
+        this.collidingGameObjects.push(this.player);
+
+        for (var i = 0; i < NUM_ENEMIES; i++) {
+            var enemyXY = this.getEnemySpawnPosition(i);
+            // TODO: update texture
+            var enemy = new Enemy(this, enemyXY[0], enemyXY[1], 'player', 1);
+            this.enemies.push(enemy);
+            this.collidingGameObjects.push(enemy);
+        }
 
         // Set up the player to collide with the tilemap layer. Alternatively, you can manually run
         // collisions in update via: this.physics.world.collide(player, layer).
@@ -135,6 +128,14 @@ export class DungeonScene extends Phaser.Scene {
     anyCursorDown () {
         return this.cursors.left.isDown || this.cursors.right.isDown || this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.space.isDown;
     }
+
+    getEnemySpawnPosition(enemyIndex) {
+        var x = 1 + enemyIndex;
+        var y = 1 + enemyIndex;
+        return [x,y];
+    }
+
+    //////////DEBUG///////////////
 
     drawDebug () {
         this.debugGraphics.clear();
