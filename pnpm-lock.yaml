@@ -7,6 +7,7 @@ specifiers:
   babel-loader: ^8.0.6
   clean-webpack-plugin: ^3.0.0
   core-js: ^3.21.0
+  easystarjs: ^0.4.4
   ethers: ^5.5.4
   file-loader: ^4.2.0
   html-webpack-plugin: ^3.2.0
@@ -23,6 +24,7 @@ specifiers:
 dependencies:
   '@walletconnect/web3-provider': 1.7.1_@babel+core@7.17.2
   core-js: 3.21.0
+  easystarjs: 0.4.4
   ethers: 5.5.4
   phaser: 3.55.2
   regenerator-runtime: 0.13.9
@@ -3206,6 +3208,12 @@ packages:
       stream-shift: 1.0.1
     dev: true
 
+  /easystarjs/0.4.4:
+    resolution: {integrity: sha512-ZSt0TkB8xuIXRIrKsM3jkmk1/cZUtyvf0DqOXf6wuKq9slx9UA5kkLtiaWhtmOQFJFKdabbvXwk6RO0znghArQ==}
+    dependencies:
+      heap: 0.2.6
+    dev: false
+
   /ecc-jsbn/0.1.2:
     resolution: {integrity: sha1-OoOpBOVDUyh4dMVkt1SThoSamMk=}
     dependencies:
@@ -4186,6 +4194,10 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
     dev: true
+
+  /heap/0.2.6:
+    resolution: {integrity: sha1-CH4fELBGky/IWU3Z5tN4r8nR5aw=}
+    dev: false
 
   /hmac-drbg/1.0.1:
     resolution: {integrity: sha1-0nRXAQJabHdabFRXk+1QL8DGSaE=}

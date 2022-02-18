@@ -27,6 +27,7 @@
   "dependencies": {
     "@walletconnect/web3-provider": "^1.7.1",
     "core-js": "^3.21.0",
+    "easystarjs": "^0.4.4",
     "ethers": "^5.5.4",
     "phaser": "^3.50.0",
     "regenerator-runtime": "^0.13.9",
