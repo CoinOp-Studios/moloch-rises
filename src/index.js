@@ -1,11 +1,14 @@
+// runs tailwind
+import './main.css';
+
 import Phaser from 'phaser';
 
 import roundButtons from './assets/buttons-round-200x201.png'
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
-import { connect } from './wallet';
 import { DungeonScene } from './dungeonScene';
+import { connect } from './wallet';
 
 const BUTTON_FRAMES = {
     INACTIVE: 8,
@@ -177,7 +180,7 @@ const phaserConfig = {
     width: 800,
     height: 600,
     backgroundColor: '#2d2d2d',
-    parent: 'phaser-example',
+    parent: 'game',
     pixelArt: true,
     physics: {
         default: 'arcade',
@@ -185,7 +188,7 @@ const phaserConfig = {
             gravity: { y: 0 }
         }
     },
-    scene: [ DungeonScene ]
+    scene: [DungeonScene]
 };
 
 const game = new Phaser.Game(phaserConfig);
