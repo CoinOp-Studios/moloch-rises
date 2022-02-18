@@ -25,6 +25,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@walletconnect/web3-provider": "^1.7.1",
     "core-js": "^3.21.0",
     "easystarjs": "^0.4.4",
