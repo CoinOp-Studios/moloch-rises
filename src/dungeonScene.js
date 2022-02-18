@@ -135,6 +135,11 @@ export class DungeonScene extends Phaser.Scene {
         return [x,y];
     }
 
+    doesTileCollide(x,y) {
+        var nextTile = this.map.getTileAt(x, y);
+        return nextTile == null || nextTile.collides;
+    }
+
     //////////DEBUG///////////////
 
     drawDebug () {

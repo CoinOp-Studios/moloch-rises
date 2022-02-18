@@ -40,9 +40,7 @@ export class Player extends CollidableSprite {
         var newY = (this.y/TILEHEIGHT) + dy;
 
         // check collision
-        var nextTile = this.scene.map.getTileAt(newX, newY);
-
-        if (nextTile == null || nextTile.collides) {
+        if(this.scene.doesTileCollide(newX, newY)) {
             // play sound
             return;
         }       
