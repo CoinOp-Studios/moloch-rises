@@ -1,25 +1,15 @@
 import Phaser from 'phaser';
 
+import { CollidableSprite } from './collidableSprite';
 import { INPUT, TILEHEIGHT, TILEWIDTH } from './labScene';
 
-export class Player extends Phaser.Physics.Arcade.Sprite {
+export class Player extends CollidableSprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
-        // the top left pixel of the player is the
-        // "anchor" for its x and y coordinates, as opposed
-        // to the center
-        this.setOrigin(0, 0);
-
-        this.scene = scene;
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
-        this.setCollideWorldBounds(true);
-
-        this.setX(x * TILEWIDTH);
-        this.setY(y * TILEHEIGHT);
     }
 
-    update(input) {
+    update (input) {
+        var x,y;
         var dx = 0;
         var dy = 0;
         if (input == null) {
@@ -38,29 +28,45 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             // not recognized
         }
 
-        this.moveXY(dx, dy)
+        x = this.tileX() + dx;
+        y = this.tileY() + dy;
 
-    }
-
-    // performs a move with collision checks
-    moveXY(dx, dy) {
-        if (dx == 0 && dy == 0) return;
-
-        // get coordinates of tile origin
-        var newX = (this.x / TILEWIDTH) + dx;
-        var newY = (this.y / TILEHEIGHT) + dy;
-
-        // check collision
-        var nextTile = this.scene.map.getTileAt(newX, newY);
-
-        if (nextTile == null || nextTile.collides) {
-            // play sound
-            return;
+        var attacked = this.attackIfMonsterExists(x, y);
+        
+        if (dx != 0 || dy != 0) {
+            this.scene.moveHistory.push(x, y, attacked);
         }
 
-        // move 
-        this.setX(this.x + dx * TILEWIDTH);
-        this.setY(this.y + dy * TILEHEIGHT);
+        if (!attacked) {
+            super.moveTileXY(x, y);
+        }
+    } 
+
+    attackIfMonsterExists(x, y) {
+        // check if the desired player movement points to
+        // an enemy. do damage to the enemy if so.
+        this.scene.enemies.forEach(enemy => {
+            var ex = enemy.tileX();
+            var ey = enemy.tileY();
+
+            if (ex == x && ey == y) {
+                // damage the monster
+                this.damageEnemy(enemy);
+                return true;
+            }
+        });
+
+        return false;
+    }
+
+    damageEnemy(enemy) {
+        // animate player sprite 
+
+        // roll die
+
+        // calculate damage
+
+        // enemy.damage(damage)
 
         // play sound
     }
