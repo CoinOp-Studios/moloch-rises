@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
 
-import { TILEHEIGHT, TILEWIDTH, INPUT } from './dungeonScene';
+import { INPUT, TILEHEIGHT, TILEWIDTH } from './labScene';
 
 export class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, 1);
+        super(scene, x, y, texture, frame);
         // the top left pixel of the player is the
         // "anchor" for its x and y coordinates, as opposed
         // to the center
@@ -19,7 +19,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         this.setY(y * TILEHEIGHT);
     }
 
-    update (input) {
+    update(input) {
         var dx = 0;
         var dy = 0;
         if (input == null) {
@@ -34,7 +34,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             dx = -1;
         } else if (input == INPUT.SPACE) {
             // attack
-        } else { 
+        } else {
             // not recognized
         }
 
@@ -45,10 +45,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     // performs a move with collision checks
     moveXY(dx, dy) {
         if (dx == 0 && dy == 0) return;
-        
+
         // get coordinates of tile origin
-        var newX = (this.x/TILEWIDTH) + dx;
-        var newY = (this.y/TILEHEIGHT) + dy;
+        var newX = (this.x / TILEWIDTH) + dx;
+        var newY = (this.y / TILEHEIGHT) + dy;
 
         // check collision
         var nextTile = this.scene.map.getTileAt(newX, newY);
@@ -56,11 +56,11 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         if (nextTile == null || nextTile.collides) {
             // play sound
             return;
-        }       
+        }
 
         // move 
-        this.setX(this.x + dx*TILEWIDTH);
-        this.setY(this.y + dy*TILEHEIGHT);
+        this.setX(this.x + dx * TILEWIDTH);
+        this.setY(this.y + dy * TILEHEIGHT);
 
         // play sound
     }

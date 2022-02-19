@@ -7,7 +7,7 @@ import roundButtons from './assets/buttons-round-200x201.png'
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
-import { DungeonScene } from './dungeonScene';
+import { LabScene } from './labScene';
 import { connect } from './wallet';
 
 const BUTTON_FRAMES = {
@@ -188,7 +188,7 @@ const phaserConfig = {
             gravity: { y: 0 }
         }
     },
-    scene: [DungeonScene]
+    scene: [LabScene]
 };
 
 const game = new Phaser.Game(phaserConfig);
