@@ -3,17 +3,17 @@ import EasyStar from 'easystarjs'
 import { Player } from './player';
 import { Enemy } from './enemy';
 
-import defaultTileset from "./assets/tilemaps/tiles/catastrophi_tiles_16.png"
-import tilemapCsv from "./assets/tilemaps/csv/catastrophi_level2.csv"
-import defaultPlayerSpritesheet from "./assets/sprites/spaceman.png"
+import _defaultTileset from "./assets/tilemaps/tiles/catastrophi_tiles_16.png"
+import _tilemapCsv from "./assets/tilemaps/csv/catastrophi_level2.csv"
+import _defaultPlayerSpritesheet from "./assets/sprites/spaceman.png"
 
-import _defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png"
-import _tilemapCsv from "./assets/tilemaps/csv/lab1.csv"
-import _defaultTileset from "./assets/tilemaps/tiles/factory64x64.png"
+import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png"
+import tilemapCsv from "./assets/tilemaps/csv/lab1.csv"
+import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png"
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
-export const TILEWIDTH = 16;
-export const TILEHEIGHT = 16;
+export const TILEWIDTH = 64;
+export const TILEHEIGHT = 64;
 export const NUM_ENEMIES = 3;
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
