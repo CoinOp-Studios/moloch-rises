@@ -1,8 +1,18 @@
-import { TILEHEIGHT, TILEWIDTH, INPUT } from './dungeonScene';
+import { TILEHEIGHT, TILEWIDTH, INPUT } from './labScene';
 
 export class CollidableSprite extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, 1);
+    constructor(scene, x, y, texture, frame, config = {}) {
+        super(scene, x, y, texture, frame);
+        // config['sounds'] should be a dictionary with the following keys:
+        //       'collision', 'attack', 'death', 'collide'
+        // the values will be preloaded handles to sounds for these events
+        this.soundDictionary = config['sounds'];
+
+        // config['dialogue'] should be a dictionary with the following keys:
+        //       'spawn', 'death', 'generic'
+        // the values will be lists of dialogue strings 
+        this.dialogue = config['dialogue'];
+
         // tuple of (x, y, attacked) to be used for zk snarks
         this.lastTurn = [];
 

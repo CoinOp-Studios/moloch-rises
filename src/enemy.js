@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import { CollidableSprite } from './collidableSprite';
-import { TILEHEIGHT, TILEWIDTH, INPUT} from './dungeonScene';
+import { TILEHEIGHT, TILEWIDTH, INPUT} from './labScene';
 
 export class Enemy extends CollidableSprite {
     constructor(scene, x, y, texture, frame) {
