@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import { CollidableSprite } from './collidableSprite';
-import { TILEHEIGHT, TILEWIDTH, INPUT } from './dungeonScene';
+import { INPUT, TILEHEIGHT, TILEWIDTH } from './labScene';
 
 export class Player extends CollidableSprite {
     constructor(scene, x, y, texture, frame) {
@@ -24,7 +24,7 @@ export class Player extends CollidableSprite {
             dx = -1;
         } else if (input == INPUT.SPACE) {
             // attack
-        } else { 
+        } else {
             // not recognized
         }
 

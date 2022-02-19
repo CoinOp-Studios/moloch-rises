@@ -14,3 +14,4 @@ dist/
 /npm-debug.log
 .pnpm-debug.log
 *.tiled-session
+yarn-error.log
