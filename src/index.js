@@ -1,6 +1,7 @@
 // runs tailwind
 import './main.css';
 
+import { Wallet } from 'ethers';
 import Phaser from 'phaser';
 
 import roundButtons from './assets/buttons-round-200x201.png'
@@ -50,41 +51,20 @@ class WalletConnect extends Phaser.Scene {
         const { width, height } = this.scale;
         console.log('width', width, 'height', height);
         const boardOutline = this.add.rectangle(0, 0, width - 100, height - 150, 0xffff44);
-        const sparks = this.add.particles('spark');
-        sparks.createEmitter({
-            x: 70,
-            y: 100,
-            emitZone: {
-                source: new Phaser.Geom.Line(0, 0, 1, 0),
-                quantity: 10,
-                type: 'edge',
-                yoyo: false,
-            },
-            gravityY: 200,
-            gravityX: 400,
-            ...emitterProps,
-        });
-        sparks.createEmitter({
-            x: width - 70,
-            y: 100,
-            emitZone: {
-                source: new Phaser.Geom.Line(0, 0, 1, 0),
-                quantity: 10,
-                type: 'edge',
-                yoyo: false,
-            },
-            gravityY: 200,
-            gravityX: -400,
-            ...emitterProps,
-        });
         boardOutline.setOrigin(0, 0);
         boardOutline.setFillStyle(0x888888, 0.5);
         //boardOutline.setScale(2);
         boardOutline.setPosition(50, 110);
-        const wallet = this.add.sprite(width - 50, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
-        wallet.setScale(0.35);
-        this.makeWalletInteractive(wallet);
-        this.sprites.wallet = wallet;
+        const walletConnectButton = this.add.sprite(width - 50, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
+        walletConnectButton.setScale(0.35);
+        this.sprites.wallet = walletConnectButton;
+        this.makeWalletButtonInteractive(walletConnectButton);
+
+        const playerButton = this.add.sprite(width - 100, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
+        playerButton.setScale(0.35);
+        this.sprites.playerButton = playerButton;
+        this.makePlayerButtonInteractive(playerButton);
+
         const particles = this.add.particles('flares');
         const buttonEmitter = particles.createEmitter({
             frame: { frames: ['red', 'yellow'], cycle: true },
@@ -107,12 +87,20 @@ class WalletConnect extends Phaser.Scene {
                 families: ['Nosifer']
             },
             active: () => {
-                this.add.text(48, 62, 'Raid at Moloch Central', { fontFamily: 'Nosifer', fontSize: '48px', fill: '#ff3864' });
+                this.add.text(48, 62, 'Moloch Rises', { fontFamily: 'Nosifer', fontSize: '48px', fill: '#ff3864' });
             }
         });
     }
 
-    makeWalletInteractive(wallet) {
+    makePlayerButtonInteractive(wallet) {
+        const hitArea = new Phaser.Geom.Circle(50, 50, 100);
+        wallet.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
+        wallet.on('pointerover', this.onPlayerOver, this);
+        wallet.on('pointerout', this.onPlayerOut, this);
+        wallet.on('pointerdown', this.onPlayerClick, this);
+    }
+
+    makeWalletButtonInteractive(wallet) {
         const hitArea = new Phaser.Geom.Circle(50, 50, 100);
         wallet.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
         wallet.on('pointerover', this.onOver, this);
@@ -146,7 +134,12 @@ class WalletConnect extends Phaser.Scene {
         }
         this.setSpriteFrame('wallet', false);
         this.buttonEmitter.explode();
-        this.makeWalletInteractive(this.sprites.wallet);
+        this.makeWalletButtonInteractive(this.sprites.wallet);
+    }
+
+    onPlayerOver(button) {
+        this.setSpriteFrame('player', true);
+        console.log('over', button);
     }
 
     onOver(button) {
@@ -188,7 +181,7 @@ const phaserConfig = {
             gravity: { y: 0 }
         }
     },
-    scene: [LabScene]
+    scene: WalletConnect,
 };
 
 const game = new Phaser.Game(phaserConfig);
