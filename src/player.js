@@ -9,6 +9,7 @@ export class Player extends CollidableSprite {
     }
 
     update (input) {
+        var x,y;
         var dx = 0;
         var dy = 0;
         if (input == null) {
@@ -27,27 +28,45 @@ export class Player extends CollidableSprite {
             // not recognized
         }
 
-        this.moveXY(dx, dy)
+        x = this.tileX() + dx;
+        y = this.tileY() + dy;
 
+        var attacked = this.attackIfMonsterExists(x, y);
+        
+        if (dx != 0 || dy != 0) {
+            this.scene.moveHistory.push(x, y, attacked);
+        }
+
+        if (!attacked) {
+            super.moveTileXY(x, y);
+        }
+    } 
+
+    attackIfMonsterExists(x, y) {
+        // check if the desired player movement points to
+        // an enemy. do damage to the enemy if so.
+        this.scene.enemies.forEach(enemy => {
+            var ex = enemy.tileX();
+            var ey = enemy.tileY();
+
+            if (ex == x && ey == y) {
+                // damage the monster
+                this.damageEnemy(enemy);
+                return true;
+            }
+        });
+
+        return false;
     }
 
-    // performs a move with collision checks
-    moveXY(dx, dy) {
-        if (dx == 0 && dy == 0) return;
-        
-        // get coordinates of tile origin
-        var newX = (this.x/TILEWIDTH) + dx;
-        var newY = (this.y/TILEHEIGHT) + dy;
+    damageEnemy(enemy) {
+        // animate player sprite 
 
-        // check collision
-        if(this.scene.doesTileCollide(newX, newY)) {
-            // play sound
-            return;
-        }       
+        // roll die
 
-        // move 
-        this.setX(this.x + dx*TILEWIDTH);
-        this.setY(this.y + dy*TILEHEIGHT);
+        // calculate damage
+
+        // enemy.damage(damage)
 
         // play sound
     }
