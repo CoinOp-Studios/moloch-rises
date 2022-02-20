@@ -118,6 +118,7 @@ export class LabScene extends Phaser.Scene {
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
             enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
             this.enemies.push(enemy);
+            enemy.initStatsFromChain();
             this.collidingGameObjects.push(enemy);
         }
 
@@ -140,7 +141,7 @@ export class LabScene extends Phaser.Scene {
         // block until wallet is connected 
         if (this.provider == null || this.avatar == null) {
             if (this.connectWalletPrompt == null) {
-                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", {fontSize: '20'});
+                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", {fontSize: '20px'});
             }
             // check via the scene manager if the user has connected to the wallet scene
             var walletScene = this.scene.manager.getScene('wallet');
