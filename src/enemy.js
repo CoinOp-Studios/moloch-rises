@@ -38,15 +38,13 @@ export class Enemy extends Character {
         this.scene.moveHistory.push([this.tileX(), this.tileY(), attackPlayer]);
 
         if (attackPlayer) {
-            // monster attacks player
-
-            // play sound
-
+            this.attack(this.scene.player);
             return;
         }
 
-        // TODO: don't call every update
-        super.moveTileXY(nextX, nextY);
+        if (this.tileX() != nextX && this.tileY() != nextY) {
+            super.moveTileXY(nextX, nextY);
+        }
     } 
 
     initStatsFromChain() {
