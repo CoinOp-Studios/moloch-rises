@@ -1,16 +1,17 @@
 import Phaser from 'phaser';
 
-import { CollidableSprite } from './collidableSprite';
+import { Character } from './character';
 import { TILEHEIGHT, TILEWIDTH, INPUT} from './labScene';
+import { VrfProvider } from './vrfProvider';
 
-export class Enemy extends CollidableSprite {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame);
+export class Enemy extends Character {
+    constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
+        super(scene, x, y, texture, frame, config, vrfProvider);
         this.pathfinder = this.scene.pathfinder;
     }
 
     update (playerMoved) {
-        if (!playerMoved) return;
+        if (!playerMoved || this.isDead()) return;
 
         // move toward the player
         var ex = this.tileX();
@@ -31,29 +32,37 @@ export class Enemy extends CollidableSprite {
 
         this.pathfinder.calculate();
 
-        var attackedPlayer = this.scene.player.tileX() == nextX && this.scene.player.tileY() == nextY;
+        var attackPlayer = this.scene.player.tileX() == nextX && this.scene.player.tileY() == nextY;
 
         // this mixes previous (position) and next (attack) turns
-        this.scene.moveHistory.push([this.tileX(), this.tileY(), attackedPlayer]);
+        this.scene.moveHistory.push([this.tileX(), this.tileY(), attackPlayer]);
 
-        if (attackedPlayer) {
-            // monster attacks player
-
-            // play sound
-
+        if (attackPlayer) {
+            this.attack(this.scene.player);
             return;
         }
 
-        super.moveTileXY(nextX, nextY);
+        this.pathfinder.stopAvoidingAdditionalPoint(this.tileX(), this.tileY());
+
+        if (this.tileX() != nextX || this.tileY() != nextY) {
+            super.moveTileXY(nextX, nextY);
+        }
+
+        this.pathfinder.avoidAdditionalPoint(this.tileX(), this.tileY());
+    } 
+
+    initStatsFromChain() {
+        this.hp = 1;
+        this.ap = 1;
+        this.dp = 1;
     }
 
-    damage(damageDone) {
-        // animate damage done
+    kill() {
+        // play death animation + sound + dialogue
+        console.log("%s: killing!", this.getName());
+        this.animateDialogue('death');
+        this.playSound('death');
 
-        // apply damage
-
-        // play death animation + sound
-
-        // update tile to dead enemy sprite
+        // change sprite
     }
 }

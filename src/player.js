@@ -1,11 +1,12 @@
 import Phaser from 'phaser';
 
-import { CollidableSprite } from './collidableSprite';
+import { Character } from './character';
 import { INPUT, TILEHEIGHT, TILEWIDTH } from './labScene';
+import { VrfProvider } from './vrfProvider';
 
-export class Player extends CollidableSprite {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame);
+export class Player extends Character {
+    constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
+        super(scene, x, y, texture, frame, config, vrfProvider);
     }
 
     update (input) {
@@ -46,29 +47,29 @@ export class Player extends CollidableSprite {
     attackIfMonsterExists(x, y) {
         // check if the desired player movement points to
         // an enemy. do damage to the enemy if so.
+        var attacked = false;
         this.scene.enemies.forEach(enemy => {
             var ex = enemy.tileX();
             var ey = enemy.tileY();
 
             if (ex == x && ey == y) {
                 // damage the monster
-                this.damageEnemy(enemy);
-                return true;
+                this.attack(enemy);
+                attacked = true;
             }
         });
 
-        return false;
+        return attacked;
     }
 
-    damageEnemy(enemy) {
-        // animate player sprite 
+    initStatsFromChain() {
+        this.hp = 10;
+        this.ap = 10;
+        this.dp = 10;
+    }
 
-        // roll die
-
-        // calculate damage
-
-        // enemy.damage(damage)
-
-        // play sound
+    kill() {
+        // play death animation + sound
+        console.log("%s: killing!", this.getName());
     }
 }
