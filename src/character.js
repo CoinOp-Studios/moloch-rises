@@ -28,6 +28,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
         this.setX(x * TILEWIDTH);
         this.setY(y * TILEHEIGHT);
+
+        this.hp = 0;
+        this.ap = 0;
+        this.dp = 0;
+
+        this.initStatsFromChain();
     }
 
     // performs a move with collision checks

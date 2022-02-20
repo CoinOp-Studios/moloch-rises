@@ -72,4 +72,10 @@ export class Player extends Character {
 
         // play sound
     }
+
+    initStatsFromChain() {
+        this.hp = 1;
+        this.ap = 1;
+        this.dp = 1;
+    }
 }

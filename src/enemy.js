@@ -57,4 +57,8 @@ export class Enemy extends Character {
 
         // update tile to dead enemy sprite
     }
+
+    initStatsFromChain() {
+
+    }
 }
