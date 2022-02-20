@@ -3,14 +3,15 @@ export const AVATAR_CONTRACTS = {
 };
 
 export const GRAPH_ENDPOINTS = {
-  "0x13881": "https://api.thegraph.com/subgraphs/name/graphprotocol/avatar"
+  "0x13881": "https://api.thegraph.com/subgraphs/name/0xbeedao/all-mumbai-nfts"
 };
 
-export const USER_TOKEN_Q = `query UserTokens($address: String!) {
-  tokens(where: { owner: $address }) {
-  id
-  owner {
-    id
+export const USER_TOKEN_Q = `
+query UserTokens($owner: String!) {
+  tokens(where: { owner: $owner }) {
+    id,
+    owner,
+    uri
   }
-  uri
-}`;
+}
+`;

@@ -285,7 +285,9 @@ class WalletConnect extends Phaser.Scene {
                 that.avatars[ix] = avatar;
             }
         };
-        getOwnedAvatars(provider, account, addAvatar);
+        getOwnedAvatars(provider, account).then((avatars) => {
+            avatars.forEach(addAvatar);
+        });
     }
 }
 
