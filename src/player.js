@@ -53,7 +53,7 @@ export class Player extends Character {
 
             if (ex == x && ey == y) {
                 // damage the monster
-                this.damageEnemy(enemy);
+                this.attack(enemy);
                 return true;
             }
         });
@@ -61,25 +61,14 @@ export class Player extends Character {
         return false;
     }
 
-    damageEnemy(enemy) {
-        // animate player sprite 
-
-        // roll die
-
-        // calculate damage
-
-        // enemy.damage(damage)
-
-        // play sound
-    }
-
     initStatsFromChain() {
-        this.hp = 1;
-        this.ap = 1;
-        this.dp = 1;
+        this.hp = 10;
+        this.ap = 10;
+        this.dp = 10;
     }
 
     kill() {
         // play death animation + sound
+        console.log("%s: killing!", this.getName());
     }
 }
