@@ -83,7 +83,7 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
 
         // SPAWN SPRITES
-        this.player = new Player(this, 1, 3, 'player', 1);
+        this.player = new Player(this, 1, 3, 'player', 0);
         this.collidingGameObjects.push(this.player);
 
         for (var i = 0; i < NUM_ENEMIES; i++) {
