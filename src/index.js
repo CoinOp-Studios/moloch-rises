@@ -13,7 +13,7 @@ import physique_game from './assets/sprites/physique_game.png';
 import physique_lg from './assets/sprites/physique_nft.png';
 import scientist_game from './assets/sprites/scientist_game.png';
 import scientist_lg from './assets/sprites/scientist_nft.png';
-import { getOwnedAvatars } from './avatar';
+import { getOwnedAvatars, mintAvatar } from './avatar';
 import { LabScene, TILEHEIGHT, TILEWIDTH } from './labScene';
 import { connect } from './wallet';
 
@@ -29,12 +29,6 @@ const FAKE_IMAGES = [
     scientist_lg,
 ];
 
-const PLAYER_SPRITES = [
-    ceo_game,
-    physique_game,
-    scientist_game
-];
-
 function getAvatarImage(avatar, index) {
     return FAKE_IMAGES[index % FAKE_IMAGES.length];
 }
@@ -42,7 +36,9 @@ function getAvatarImage(avatar, index) {
 const makeAvatarChoice = (avatar, index, key, callback) => {
     const choice = document.createElement('li');
     choice.id = key;
-    const image = getAvatarImage(avatar, index);
+    const cid = avatar.fields.image.split('/').pop();
+    const image = `http://ipfs.io/ipfs/${cid}`;
+    console.log('image', image, avatar.fields.image);
     choice.innerHTML = `<img src="${image}" height="256" width="256" />`;
     choice.addEventListener('click', () => {
         callback(avatar, index);
@@ -142,10 +138,23 @@ class WalletConnect extends Phaser.Scene {
         document.getElementById('avatar-select-close').addEventListener('click', () => {
             this.hideAvatarSelect();
         });
+
+        document.getElementById('avatar-mint').addEventListener('click', () => {
+            this.mintAvatarForUser();
+        });
     }
 
     toggleAvatarSelect(state) {
         document.getElementById("avatar-select").style.display = state ? "block" : "none";
+    }
+
+    mintAvatarForUser() {
+        this.provider.listAccounts().then(network => {
+            const account = network[0];
+            mintAvatar(this.provider, account).then(() => {
+                this.updateOwnedAvatars(this.provider, account);
+            });
+        });
     }
 
     makePlayerButtonInteractive(button) {
@@ -275,7 +284,7 @@ class WalletConnect extends Phaser.Scene {
                 console.log('added avatar', avatar);
                 const avatarsElt = document.getElementById("avatar-list");
                 that.avatars.push(avatar);
-                const key = `avatar-${index}`;
+                const key = `avatar-${avatar.id}`;
                 if (!document.getElementById(key)) {
                     const choice = makeAvatarChoice(avatar, index, key, setAvatar);
                     console.log('adding', choice);
