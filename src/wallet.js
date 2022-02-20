@@ -47,8 +47,15 @@ export const web3Modal = new Web3Modal({
   providerOptions: PROVIDER_OPTIONS
 });
 
+let provider = null;
+let instance = null;
+
 export async function connect() {
-  const instance = await web3Modal.connect();
-  const provider = new ethers.providers.Web3Provider(instance);
+  instance = await web3Modal.connect();
+  provider = new ethers.providers.Web3Provider(instance);
+  return provider;
+}
+
+export function getProvider() {
   return provider;
 }
