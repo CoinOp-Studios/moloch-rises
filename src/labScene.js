@@ -138,14 +138,16 @@ export class LabScene extends Phaser.Scene {
 
     update (time, delta) {
         // block until wallet is connected 
-        if (this.provider == null) {
+        if (this.provider == null || this.avatar == null) {
             if (this.connectWalletPrompt == null) {
                 this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet to continue!", {fontSize: '40px'});
             }
             // check via the scene manager if the user has connected to the wallet scene
             var walletScene = this.scene.manager.getScene('wallet');
             this.provider = walletScene.provider;
+            this.avatar = walletScene.currentAvatar;
             // spin until the user connects a wallet
+
             return;
         }
 
@@ -165,7 +167,7 @@ export class LabScene extends Phaser.Scene {
         }
 
         // start a game
-        //let tx = this.board.start(this.avatar.id);
+        let tx = this.board.start(this.avatar.id);
 
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
