@@ -2,7 +2,8 @@ import { ethers } from "ethers";
 import { base64 } from "ethers/lib/utils";
 
 import { AVATAR_CONTRACTS, BOARD_CONTRACTS } from "../config";
-import { avatar, board } from './contractAbi';
+import { avatar } from './avatar';
+import { board } from './board';
 import { getTokens } from './queries';
 
 export async function getAvatarContract(provider) {
