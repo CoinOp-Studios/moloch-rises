@@ -43,6 +43,7 @@ export class LabScene extends Phaser.Scene {
         this.lastInput = 0;
         this.minInputDelayMs = 50;
         this.avatar = null;
+        this.board = null;
 
         // web3 provider
         this.connectWalletPrompt = null;
@@ -154,7 +155,14 @@ export class LabScene extends Phaser.Scene {
         }
         
         // UPDATE STATE FROM ON CHAIN
-        this.getSeedFromBoardContact();
+        console.log("retrieving game board from on chain")
+        getBoardContract(this.provider).then(b => {
+            this.board = b;
+        });
+
+        if (this.board == null) {
+            return;
+        }
 
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
@@ -194,9 +202,15 @@ export class LabScene extends Phaser.Scene {
         this.player.update(input, this);
 
         // update enemies 
+        var allDead = true;
         this.enemies.forEach(enemy => {
             enemy.update(playerInputAccepted);
+            allDead = allDead && enemy.isDead();
         });
+
+        if (allDead) {
+            this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
+        }
         
         this.keyPressedLastTick = anyKeyPressed;
     }
@@ -266,8 +280,7 @@ export class LabScene extends Phaser.Scene {
     //////////ON-CHAIN INTERACTIONS////////////
 
     getSeedFromBoardContact() {
-
-    }
+            }
 
     /////////EMBELLISHMENTS/////////
     getEnemyConfig() {
