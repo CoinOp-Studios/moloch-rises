@@ -1,3 +1,14 @@
+# Moloch Rises
+
+## Testnet contract deployments
+
+Board: https://mumbai.polygonscan.com/address/0x4bdd237de99fa5c92e197cfd0077ffb4069b4dba#code
+
+Loot: https://mumbai.polygonscan.com/address/0x8fb0bf5cf1f7e1287253b7ad9671c6fa36ea21b1#code
+
+Avatar: https://mumbai.polygonscan.com/address/0x2eaf87e63115070fbad8e5e9cd7bb25c2e1351a0#code
+
+
 # Phaser 3 Webpack Project Template
 
 A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading for development and production-ready builds.
