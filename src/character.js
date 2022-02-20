@@ -1,7 +1,8 @@
 import { TILEHEIGHT, TILEWIDTH, INPUT } from './labScene';
+import { VrfProvider } from './vrfProvider';
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y, texture, frame, config = {}) {
+    constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
         super(scene, x, y, texture, frame);
         // config['sounds'] should be a dictionary with the following keys:
         //       'collision', 'attack', 'death', 'collide'
@@ -13,8 +14,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         // the values will be lists of dialogue strings 
         this.dialogue = config['dialogue'];
 
-        // tuple of (x, y, attacked) to be used for zk snarks
-        this.lastTurn = [];
+        this.vrfProvider = vrfProvider;
 
         // the top left pixel of the player is the
         // "anchor" for its x and y coordinates, as opposed

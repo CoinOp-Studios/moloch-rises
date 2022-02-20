@@ -2,10 +2,11 @@ import Phaser from 'phaser';
 
 import { Character } from './character';
 import { TILEHEIGHT, TILEWIDTH, INPUT} from './labScene';
+import { VrfProvider } from './vrfProvider';
 
 export class Enemy extends Character {
-    constructor(scene, x, y, texture, frame) {
-        super(scene, x, y, texture, frame);
+    constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
+        super(scene, x, y, texture, frame, config, vrfProvider);
         this.pathfinder = this.scene.pathfinder;
     }
 
