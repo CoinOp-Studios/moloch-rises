@@ -152,6 +152,9 @@ export class LabScene extends Phaser.Scene {
             this.connectWalletPrompt.destroy();
             this.connectWalletPrompt = null;
         }
+        
+        // UPDATE STATE FROM ON CHAIN
+        this.getSeedFromBoardContact();
 
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
@@ -261,19 +264,9 @@ export class LabScene extends Phaser.Scene {
     } 
 
     //////////ON-CHAIN INTERACTIONS////////////
-    getBoardAbi() {
-        let abi = [];
-        return abi;
-    }
 
-    getAvatarAbi() {
-        let abi = [];
-        return abi;
-    }
+    getSeedFromBoardContact() {
 
-    getLootAbi() {
-        let abi = [];
-        return abi;
     }
 
     /////////EMBELLISHMENTS/////////
