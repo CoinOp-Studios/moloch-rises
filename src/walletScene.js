@@ -223,7 +223,7 @@ export class WalletScene extends Phaser.Scene {
             }
             this.setSpriteFrame('playerButton', false);
         });
-        this.gameScene.provider = provider;
+        //this.gameScene.provider = provider;
         return true;
     }
 

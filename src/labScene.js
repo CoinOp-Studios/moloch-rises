@@ -45,6 +45,7 @@ export class LabScene extends Phaser.Scene {
         this.avatar = null;
 
         // web3 provider
+        this.connectWalletPrompt = null;
         this.provider = null;
 
         // game objects with collision which need to
@@ -91,10 +92,6 @@ export class LabScene extends Phaser.Scene {
         // we recalculate every turn... keeping this low for now
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
 
-        // RETRIEVE ON-CHAIN STATE 
-
-
-
         // SPAWN SPRITES
         this.player = new Player(
             this,
@@ -135,26 +132,27 @@ export class LabScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(this.player);
 
-        this.debugGraphics = this.add.graphics();
-        var scene = this;
-        this.input.keyboard.on('keydown-C', function (event) {
-            scene.showDebug = !scene.showDebug;
-            scene.drawDebug();
-        });
-
         this.cursors = this.input.keyboard.createCursorKeys();
-
-        this.helpText = this.add.text(16, 16, this.getHelpMessage(), {
-            fontSize: '18px',
-            fill: '#ffffff'
-        });
-
-        this.helpText.setScrollFactor(0);
-
-
     }
 
     update (time, delta) {
+        // block until wallet is connected 
+        if (this.provider == null) {
+            if (this.connectWalletPrompt == null) {
+                this.connectWalletPrompt = this.add.text(16, 16, "please connect a wallet to continue!", {fontSize: '40px'});
+            }
+            // check via the scene manager if the user has connected to the wallet scene
+            var walletScene = this.scene.manager.getScene('wallet');
+            this.provider = walletScene.provider;
+            // spin until the user connects a wallet
+            return;
+        }
+
+        if (this.connectWalletPrompt != null) {
+            this.connectWalletPrompt.destroy();
+            this.connectWalletPrompt = null;
+        }
+
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
         var anyKeyPressed = this.anyCursorDown();
