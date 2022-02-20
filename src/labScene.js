@@ -7,6 +7,7 @@ import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png"
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
+import { VrfProvider } from './vrfProvider';
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
 export const TILEWIDTH = 64;
@@ -83,13 +84,27 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
 
         // SPAWN SPRITES
-        this.player = new Player(this, 1, 3, 'player', 0);
+        this.player = new Player(
+            this,
+            1,
+            3,
+            'player',
+            0, // frame
+            this.getPlayerConfig(),
+            new VrfProvider());
         this.collidingGameObjects.push(this.player);
 
         for (var i = 0; i < NUM_ENEMIES; i++) {
             var enemyXY = this.getEnemySpawnPosition(i);
-            // TODO: update texture
-            var enemy = new Enemy(this, enemyXY[0], enemyXY[1], 'enemy_' + i, i * 2);
+            var enemy = new Enemy(
+                this,
+                enemyXY[0],
+                enemyXY[1],
+                'enemy_' + i,
+                i * 2, //frame
+                this.getEnemyConfig(), 
+                new VrfProvider());
+
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
             enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
             this.enemies.push(enemy);
@@ -234,6 +249,15 @@ export class LabScene extends Phaser.Scene {
         }
         this.pathfinder.setAcceptableTiles(acceptableTiles);
     } 
+
+    /////////EMBELLISHMENTS/////////
+    getEnemyConfig() {
+        return {};
+    }
+
+    getPlayerConfig() {
+        return {};
+    }
 
     //////////DEBUG///////////////
 
