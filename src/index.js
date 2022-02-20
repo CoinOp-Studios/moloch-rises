@@ -13,7 +13,7 @@ import physique_game from './assets/sprites/physique_game.png';
 import physique_lg from './assets/sprites/physique_nft.png';
 import scientist_game from './assets/sprites/scientist_game.png';
 import scientist_lg from './assets/sprites/scientist_nft.png';
-import { getOwnedAvatars, mintAvatar } from './avatar';
+import { getOwnedAvatars } from './contractAbi';
 import { LabScene, TILEHEIGHT, TILEWIDTH } from './labScene';
 import { connect } from './wallet';
 

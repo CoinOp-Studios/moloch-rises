@@ -2,12 +2,14 @@ import Phaser from 'phaser';
 import EasyStar from 'easystarjs';
 import { Player } from './player';
 import { Enemy } from './enemy';
+import { getBoardContract, getAvatarContract } from './contractAbi'
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png"
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
 import { VrfProvider } from './vrfProvider';
+import { AbiCoder } from 'ethers/lib/utils';
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
 export const TILEWIDTH = 64;
@@ -38,6 +40,9 @@ export class LabScene extends Phaser.Scene {
         this.lastInputTime = 0;
         this.lastInput = 0;
         this.minInputDelayMs = 50;
+
+        // web3 provider
+        this.provider = null;
 
         // game objects with collision which need to
         // check for one another
@@ -82,6 +87,10 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.enableSync();
         // we recalculate every turn... keeping this low for now
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
+
+        // RETRIEVE ON-CHAIN STATE 
+
+
 
         // SPAWN SPRITES
         this.player = new Player(
@@ -249,6 +258,22 @@ export class LabScene extends Phaser.Scene {
         }
         this.pathfinder.setAcceptableTiles(acceptableTiles);
     } 
+
+    //////////ON-CHAIN INTERACTIONS////////////
+    getBoardAbi() {
+        let abi = [];
+        return abi;
+    }
+
+    getAvatarAbi() {
+        let abi = [];
+        return abi;
+    }
+
+    getLootAbi() {
+        let abi = [];
+        return abi;
+    }
 
     /////////EMBELLISHMENTS/////////
     getEnemyConfig() {
