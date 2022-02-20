@@ -4,6 +4,7 @@ import { Player } from './player';
 import { Enemy } from './enemy';
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
+import defaultEnemySpritesheet from "./assets/sprites/Droids_v2 .png"
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
 
@@ -13,6 +14,7 @@ export const TILEHEIGHT = 64;
 export const NUM_ENEMIES = 3;
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
+const ENEMY_SPRITE_SIZE_PX = 1024;
 const WALKABLE_RANGES = [
     [1,3], [26,28], [51, 53], [76,78], [101, 103], [126, 128], [183, 185], [189, 200]
 ];
@@ -51,6 +53,18 @@ export class LabScene extends Phaser.Scene {
         this.load.image('tiles', defaultTileset);
         this.load.tilemapCSV('map', tilemapCsv);
         this.load.spritesheet('player', defaultPlayerSpritesheet, { frameWidth: TILEWIDTH, frameHeight: TILEHEIGHT });
+        for (var i = 0; i < NUM_ENEMIES; i++){
+            this.load.spritesheet(
+                'enemy_' + i,
+                 defaultEnemySpritesheet,
+                 { 
+                    frameWidth: ENEMY_SPRITE_SIZE_PX,
+                    frameHeight: ENEMY_SPRITE_SIZE_PX,
+                    startFrame: 2 * i,
+                    endFrame: 2 * i + 1 
+                }
+            );
+        }
     }
 
     create () {
@@ -75,14 +89,12 @@ export class LabScene extends Phaser.Scene {
         for (var i = 0; i < NUM_ENEMIES; i++) {
             var enemyXY = this.getEnemySpawnPosition(i);
             // TODO: update texture
-            var enemy = new Enemy(this, enemyXY[0], enemyXY[1], 'player', 2);
+            var enemy = new Enemy(this, enemyXY[0], enemyXY[1], 'enemy_' + i, i * 2);
+            enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
+            enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
             this.enemies.push(enemy);
             this.collidingGameObjects.push(enemy);
         }
-
-        this.enemies[0].tint = 0xff0000;
-        this.enemies[1].tint = 0x00ff00;
-        this.enemies[2].tint = 0x0000ff;
 
         this.physics.add.collider(this.player, layer);
 
