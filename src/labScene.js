@@ -1,15 +1,11 @@
 import Phaser from 'phaser';
-import EasyStar from 'easystarjs'
+import EasyStar from 'easystarjs';
 import { Player } from './player';
 import { Enemy } from './enemy';
 
-import _defaultTileset from "./assets/tilemaps/tiles/catastrophi_tiles_16.png"
-import _tilemapCsv from "./assets/tilemaps/csv/catastrophi_level2.csv"
-import _defaultPlayerSpritesheet from "./assets/sprites/spaceman.png"
-
-import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png"
-import tilemapCsv from "./assets/tilemaps/csv/lab1.csv"
-import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png"
+import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
+import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
+import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
 export const TILEWIDTH = 64;
