@@ -55,7 +55,8 @@ export class Enemy extends Character {
 
     kill() {
         // play death animation + sound + dialogue
-
+        console.log("%s: killing!", this.getName());
+        this.animateDialogue('death');
         this.playSound('death');
 
         // change sprite
