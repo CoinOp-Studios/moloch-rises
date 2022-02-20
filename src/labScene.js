@@ -1,22 +1,24 @@
 import Phaser from 'phaser';
-import EasyStar from 'easystarjs'
+import EasyStar from 'easystarjs';
 import { Player } from './player';
 import { Enemy } from './enemy';
 
-import defaultTileset from "./assets/tilemaps/tiles/catastrophi_tiles_16.png"
-import tilemapCsv from "./assets/tilemaps/csv/catastrophi_level2.csv"
-import defaultPlayerSpritesheet from "./assets/sprites/spaceman.png"
-
-import _defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png"
-import _tilemapCsv from "./assets/tilemaps/csv/lab1.csv"
-import _defaultTileset from "./assets/tilemaps/tiles/factory64x64.png"
+import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
+import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
+import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
-export const TILEWIDTH = 16;
-export const TILEHEIGHT = 16;
+export const TILEWIDTH = 64;
+export const TILEHEIGHT = 64;
 export const NUM_ENEMIES = 3;
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
+const WALKABLE_RANGES = [
+    [1,3], [26,28], [51, 53], [76,78], [101, 103], [126, 128], [183, 185], [189, 200]
+];
+const COLLIDING_RANGES = [
+    [4, 25], [29, 50], [54, 75], [79, 100], [104, 125], [129, 182], [186, 188]
+];
 const PATHFINDER_ITERATIONS = 1000;
 
 export class LabScene extends Phaser.Scene {
@@ -43,6 +45,8 @@ export class LabScene extends Phaser.Scene {
         this.moveHistory = [];
     }
 
+    //////////////// PHASER LIFECYLE //////////////////////////
+
     preload() {
         this.load.image('tiles', defaultTileset);
         this.load.tilemapCSV('map', tilemapCsv);
@@ -65,7 +69,7 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
 
         // SPAWN SPRITES
-        this.player = new Player(this, 3, 0, 'player', 1);
+        this.player = new Player(this, 1, 3, 'player', 1);
         this.collidingGameObjects.push(this.player);
 
         for (var i = 0; i < NUM_ENEMIES; i++) {
@@ -157,29 +161,32 @@ export class LabScene extends Phaser.Scene {
         this.keyPressedLastTick = anyKeyPressed;
     }
 
+    /////////////////////////////////////////////
+
     anyCursorDown () {
         return this.cursors.left.isDown || this.cursors.right.isDown || this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.space.isDown;
     }
 
     getEnemySpawnPosition(enemyIndex) {
-        var x = 2 + enemyIndex;
+        var x = 1 + enemyIndex;
         var y = 12;
         return [x,y];
+    }
+
+    //////////// TILING & NAVIGATION //////////////////
+    getTileID(x, y) {
+        var tile = this.map.getTileAt(x, y);
+        return tile.index;
     }
 
     // checks if a tile at coordinate x,y has collision enabled
     doesTileCollide(x,y) {
         var nextTile = this.map.getTileAt(x, y);
-        return nextTile == null || nextTile.collides;
+        return nextTile == null || this.doesTileIDCollide(nextTile.index);
     }
 
-    // checks if a tile type had collision enabled
-    // i is the index of the tile type in the set of tiles for the map
-    doesTileIndexCollide(i) {
-        // cheap check for now based on ranges of tiles colliding;
-        // this should be replaced by a check for a property on a particular tile
-        // index with e.g. if(!tileset.tileProperties.hasOwnProperty(index))
-        return i >= COLLISION_INDEX_START && i <= COLLISION_INDEX_END;
+    doesTileIDCollide(index) {
+        return this.map.tilesets[0].tileProperties.hasOwnProperty(index + 1);
     }
 
     buildPathfindingGrid()
@@ -197,28 +204,24 @@ export class LabScene extends Phaser.Scene {
         return grid;
     }
 
-    // easystar is returning coordinates in non-walkable tiles.... this needs a review!
     buildAcceptableTileList() {
         var tileset = this.map.tilesets[0];
         var properties = tileset.tileProperties;
         var acceptableTiles = [];
 
-        for(var i = tileset.firstgid-1; i < tileset.total; i++){ // firstgid and total are fields from Tiled that indicate the range of IDs that the tiles can take in that tileset
-            if (!properties.hasOwnProperty(i)) {
-                // If there is no property indicated at all, it means it's a walkable tile
-                acceptableTiles.push(i+1);
-                continue;
-            }
-            if (!properties[i].collide) acceptableTiles.push(i+1);
-            if (properties[i].cost) Game.finder.setTileCost(i+1, properties[i].cost); // If there is a cost attached to the tile, let's register it
+        // iterate manually set ranges for collision
+        COLLIDING_RANGES.forEach(range => {
+           for(var i = range[0]; i <= range[1]; i++) {
+               properties[i] = new Object();
+               properties[i]['collide'] = true;
+           } 
+        });
+
+        for (var i = tileset.firstgid; i < tileset.total; i++){ // firstgid and total are fields from Tiled that indicate the range of IDs that the tiles can take in that tileset
+            if (!properties.hasOwnProperty(i + 1)) acceptableTiles.push(i);
         }
         this.pathfinder.setAcceptableTiles(acceptableTiles);
-    }
-
-    getTileID(x, y) {
-        var tile = this.map.getTileAt(x, y);
-        return tile.index;
-    }
+    } 
 
     //////////DEBUG///////////////
 
