@@ -12,10 +12,8 @@ class GameWrapper extends Phaser.Scene {
     }
 
     create() {
-        this.scene.launch('wallet', WalletScene, true)
-        this.scene.launch('lab', LabScene, true)
-        // this.scene.moveAbove('wallet', 'lab');
-        this.scene.start('wallet');
+        var labScene = this.scene.add('lab', LabScene, true);
+        var walletScene = this.scene.add('wallet', WalletScene, true);
     }
 }
 
@@ -43,7 +41,23 @@ const gameConfig = {
         }
     },
     scene: LabScene,
+    walletGame: null
 };
 
-const wallet = new Phaser.Game(walletConfig);
-const game = new Phaser.Game(gameConfig);
+const wrapperConfig = {
+    type: Phaser.AUTO,
+    width: TILEWIDTH * 15, // closest to 800
+    height: TILEHEIGHT * 12, // closest to 600 + fringe for buttons
+    backgroundColor: '#2d2d2d',
+    parent: 'game',
+    pixelArt: true,
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 }
+        }
+    },
+    scene: GameWrapper,
+};
+
+var game = new Phaser.Game(wrapperConfig);

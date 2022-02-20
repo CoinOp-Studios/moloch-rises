@@ -42,8 +42,11 @@ export class LabScene extends Phaser.Scene {
         this.lastInputTime = 0;
         this.lastInput = 0;
         this.minInputDelayMs = 50;
+        this.avatar = null;
+        this.board = null;
 
         // web3 provider
+        this.connectWalletPrompt = null;
         this.provider = null;
 
         // game objects with collision which need to
@@ -90,10 +93,6 @@ export class LabScene extends Phaser.Scene {
         // we recalculate every turn... keeping this low for now
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
 
-        // RETRIEVE ON-CHAIN STATE 
-
-
-
         // SPAWN SPRITES
         this.player = new Player(
             this,
@@ -119,6 +118,7 @@ export class LabScene extends Phaser.Scene {
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
             enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
             this.enemies.push(enemy);
+            enemy.initStatsFromChain();
             this.collidingGameObjects.push(enemy);
         }
 
@@ -134,26 +134,50 @@ export class LabScene extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(this.player);
 
-        this.debugGraphics = this.add.graphics();
-        var scene = this;
-        this.input.keyboard.on('keydown-C', function (event) {
-            scene.showDebug = !scene.showDebug;
-            scene.drawDebug();
-        });
-
         this.cursors = this.input.keyboard.createCursorKeys();
-
-        this.helpText = this.add.text(16, 16, this.getHelpMessage(), {
-            fontSize: '18px',
-            fill: '#ffffff'
-        });
-
-        this.helpText.setScrollFactor(0);
-
-
     }
 
     update (time, delta) {
+        // block until wallet is connected 
+        if (this.provider == null || this.avatar == null) {
+            if (this.connectWalletPrompt == null) {
+                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", {fontSize: '20px'});
+            }
+            // check via the scene manager if the user has connected to the wallet scene
+            var walletScene = this.scene.manager.getScene('wallet');
+            this.provider = walletScene.provider;
+            this.avatar = walletScene.currentAvatar;
+
+            // spin until the user connects a wallet
+
+            return;
+        }
+
+        if (this.connectWalletPrompt != null) {
+            this.connectWalletPrompt.destroy();
+            this.connectWalletPrompt = null;
+        }
+        
+        // UPDATE STATE FROM ON CHAIN
+        var avatarId = this.avatar[0].id;
+        this.player.initStatsFromChain(this.avatar[0]);
+
+        console.log("retrieving game board from on chain")
+
+        /*
+        getBoardContract(this.provider).then(b => {
+            this.board = b;
+        });
+        if (this.board == null) {
+            return;
+        }
+        
+        // start a game
+        var startResult = null;
+        this.board.start(this.avatar.id).then(g => {
+
+        });*/
+
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
         var anyKeyPressed = this.anyCursorDown();
@@ -192,9 +216,15 @@ export class LabScene extends Phaser.Scene {
         this.player.update(input, this);
 
         // update enemies 
+        var allDead = true;
         this.enemies.forEach(enemy => {
             enemy.update(playerInputAccepted);
+            allDead = allDead && enemy.isDead();
         });
+
+        if (allDead) {
+            this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
+        }
         
         this.keyPressedLastTick = anyKeyPressed;
     }
@@ -262,19 +292,9 @@ export class LabScene extends Phaser.Scene {
     } 
 
     //////////ON-CHAIN INTERACTIONS////////////
-    getBoardAbi() {
-        let abi = [];
-        return abi;
-    }
 
-    getAvatarAbi() {
-        let abi = [];
-        return abi;
-    }
+    getSeedFromBoardContact() {
 
-    getLootAbi() {
-        let abi = [];
-        return abi;
     }
 
     /////////EMBELLISHMENTS/////////

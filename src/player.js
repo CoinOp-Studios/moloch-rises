@@ -64,10 +64,11 @@ export class Player extends Character {
         return attacked;
     }
 
-    initStatsFromChain() {
-        this.hp = 10;
-        this.ap = 10;
-        this.dp = 10;
+    initStatsFromChain(avatar) {
+        var id = avatar.id;
+        this.hp = avatar.fields.attributes[0].value;
+        this.ap = avatar.fields.attributes[1].value;
+        this.dp = avatar.fields.attributes[2].value;
     }
 
     kill() {
