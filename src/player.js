@@ -47,6 +47,7 @@ export class Player extends Character {
     attackIfMonsterExists(x, y) {
         // check if the desired player movement points to
         // an enemy. do damage to the enemy if so.
+        var attacked = false;
         this.scene.enemies.forEach(enemy => {
             var ex = enemy.tileX();
             var ey = enemy.tileY();
@@ -54,11 +55,11 @@ export class Player extends Character {
             if (ex == x && ey == y) {
                 // damage the monster
                 this.attack(enemy);
-                return true;
+                attacked = true;
             }
         });
 
-        return false;
+        return attacked;
     }
 
     initStatsFromChain() {
