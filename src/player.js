@@ -13,6 +13,8 @@ export class Player extends Character {
         var x,y;
         var dx = 0;
         var dy = 0;
+
+        this.updateAnimations();
         if (input == null) {
             // idle animation
             return;

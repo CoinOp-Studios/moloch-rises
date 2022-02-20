@@ -11,6 +11,7 @@ export class Enemy extends Character {
     }
 
     update (playerMoved) {
+        this.updateAnimations();
         if (!playerMoved || this.isDead()) return;
 
         // move toward the player

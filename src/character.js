@@ -13,6 +13,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         //       'spawn', 'death', 'generic'
         // the values will be lists of dialogue strings 
         this.dialogue = config['dialogue'];
+        this.currentDialogue = null;
+        this.currentDamageBlocked = null;
+        this.currentDamageReceived = null;
 
         this.vrfProvider = vrfProvider;
 
@@ -84,7 +87,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
             // animate attack
 
             // animate dialogue
-            this.animateDialogue('attack');
+            if (this.vrfProvider.roll(3) == 3) {
+                this.animateDialogue('attack');
+            }
 
             // play sound
             this.playSound('attack');
@@ -121,7 +126,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         var damageReceived = Math.max(0, damageDealt - this.dp);
 
         // animate damage done
-        this.animateDamage(damageDealt, damageReceived);
+        this.animateDamage(damageDealt - damageReceived, damageReceived);
 
         // apply damage
         this.hp -= damageReceived;
@@ -135,11 +140,81 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    animateDialogue(dialogueName) {
-
+    fadeCurrentDialogue() {
+        if (this.currentDialogue != null) {
+            var fadeDeltaPerUpdate = 1/60.0;
+            // hacky
+            this.currentDialogue.alpha -= fadeDeltaPerUpdate
+            if (this.currentDialogue.alpha <= fadeDeltaPerUpdate){
+                this.currentDialogue.destroy()
+                this.currentDialogue = null;
+            }
+        }
     }
 
-    animateDamage(dealt, received) {
+    fadeText(textObject) {
+        if (textObject != null) {
+            var fadeDeltaPerUpdate = 1/60.0;
+            // hacky
+            textObject.alpha -= fadeDeltaPerUpdate
+            if (textObject.alpha <= fadeDeltaPerUpdate){
+                textObject.destroy()
+                return true;
+            }
+        }
+        return false;
+    }
 
+    updateAnimations() {
+        if (this.fadeText(this.currentDialogue)) {
+            this.currentDialogue = null;
+        }
+
+        if (this.fadeText(this.currentDamageReceived)){
+            this.currentDamageReceived = null;
+        }
+
+        if (this.fadeText(this.currentDamageBlocked)) {
+            this.currentDamageBlocked = null;
+        }
+    }
+
+    // animates a random dialogue choice in the supplied category
+    animateDialogue(dialogueName) { 
+        if (this.currentDialogue == null) {
+            var dialogueCategory =  this.dialogue[dialogueName];
+            var dialogueToDisplay = dialogueCategory[Math.floor(Math.random()*dialogueCategory.length)];
+            var text = this.animateText(dialogueToDisplay, this.x - TILEWIDTH/2, this.y, "#000000");
+            this.currentDialogue = text;
+        }
+        else {
+            console.log("%s: current dialogue not null", this.getName());
+        }
+    }
+
+    animateDamage(received, blocked) {
+        if (this.currentDamageReceived == null && this.currentDamageBlocked == null){
+            // crimson and grey colors with staggering
+            this.currentDamageReceived = this.animateText(received, this.x + 20, this.y + TILEHEIGHT, "#dc143c", 20);
+            this.currentDamageBlocked = this.animateText(blocked, this.x + TILEWIDTH - 20, this.y + TILEHEIGHT, "#bec2cb", 20);
+        }
+    }
+
+    animateText(textToDisplay, x = this.x, y = this.y, color = "#000000", size = 12) {
+        var text = this.scene.add.text(
+            x, // center the text
+            y,
+            textToDisplay, 
+            { fontFamily: "Consolas", fontSize: size + "px" , fill: color });
+        text.stroke = "#de77ae";
+        text.strokeThickness = 14;
+
+        this.scene.physics.world.enable([ text ]);
+
+        // text floats up
+        text.body.velocity.setTo(0, -20);
+        text.body.collideWorldBounds = true;
+        
+        return text;
     }
 }
