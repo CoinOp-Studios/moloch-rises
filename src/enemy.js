@@ -11,7 +11,7 @@ export class Enemy extends Character {
     }
 
     update (playerMoved) {
-        if (!playerMoved) return;
+        if (!playerMoved || this.isDead()) return;
 
         // move toward the player
         var ex = this.tileX();
@@ -32,12 +32,12 @@ export class Enemy extends Character {
 
         this.pathfinder.calculate();
 
-        var attackedPlayer = this.scene.player.tileX() == nextX && this.scene.player.tileY() == nextY;
+        var attackPlayer = this.scene.player.tileX() == nextX && this.scene.player.tileY() == nextY;
 
         // this mixes previous (position) and next (attack) turns
-        this.scene.moveHistory.push([this.tileX(), this.tileY(), attackedPlayer]);
+        this.scene.moveHistory.push([this.tileX(), this.tileY(), attackPlayer]);
 
-        if (attackedPlayer) {
+        if (attackPlayer) {
             // monster attacks player
 
             // play sound
@@ -45,20 +45,21 @@ export class Enemy extends Character {
             return;
         }
 
+        // TODO: don't call every update
         super.moveTileXY(nextX, nextY);
-    }
-
-    damage(damageDone) {
-        // animate damage done
-
-        // apply damage
-
-        // play death animation + sound
-
-        // update tile to dead enemy sprite
-    }
+    } 
 
     initStatsFromChain() {
+        this.hp = 1;
+        this.ap = 1;
+        this.dp = 1;
+    }
 
+    kill() {
+        // play death animation + sound + dialogue
+
+        this.playSound('death');
+
+        // change sprite
     }
 }

@@ -5,7 +5,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
         super(scene, x, y, texture, frame);
         // config['sounds'] should be a dictionary with the following keys:
-        //       'collision', 'attack', 'death', 'collide'
+        //       'move', 'attack', 'death', 'collide'
         // the values will be preloaded handles to sounds for these events
         this.soundDictionary = config['sounds'];
 
@@ -41,6 +41,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         // check collision
         if(this.scene.doesTileCollide(x, y)) {
             // play sound
+            this.playSound('collide');
             return;
         }       
 
@@ -49,6 +50,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.setY(y * TILEHEIGHT);
 
         // play sound
+        this.playSound('move');
+        this.animateDialogue('generic');
     }
 
     tileX() {
@@ -57,5 +60,51 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     tileY() {
         return this.y / TILEHEIGHT;
+    }
+
+    isDead() {
+        return this.hp <= 0;
+    }
+
+    attack(character) {
+        // calculate damage w/ randomness
+
+        // animate attack
+
+        // animate dialogue
+
+        // play sound
+        this.playSound('attack');
+
+        // apply damage to character
+        if (!character.isDead()) {
+            character.takeDamage();
+        }
+
+    }
+
+    takeDamage(damageDealt) {
+        var damageReceived = damageDealt - this.dp;
+
+        // animate damage done
+        this.animateDamage(damageDealt, damageReceived);
+
+        // apply damage
+        this.hp -= damageReceived;
+        if (this.hp <= 0) {
+            this.kill();
+        }
+    }
+
+    playSound(soundName) {
+
+    }
+
+    animateDialogue(dialogueName) {
+
+    }
+
+    animateDamage(dealt, received) {
+
     }
 }

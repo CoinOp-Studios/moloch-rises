@@ -78,4 +78,8 @@ export class Player extends Character {
         this.ap = 1;
         this.dp = 1;
     }
+
+    kill() {
+        // play death animation + sound
+    }
 }

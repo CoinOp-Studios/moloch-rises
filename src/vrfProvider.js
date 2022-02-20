@@ -1,5 +1,3 @@
-import Math from "core-js/fn/math";
-
 export class VrfProvider {
     constructor() {
 
