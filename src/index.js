@@ -7,7 +7,7 @@ import roundButtons from './assets/buttons-round-200x201.png'
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
-import { LabScene } from './labScene';
+import { LabScene, TILEHEIGHT, TILEWIDTH } from './labScene';
 import { connect } from './wallet';
 
 const BUTTON_FRAMES = {
@@ -177,8 +177,8 @@ const config = {
 
 const phaserConfig = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: TILEWIDTH * 13, // closest to 800
+    height: TILEHEIGHT * 10, // closest to 600
     backgroundColor: '#2d2d2d',
     parent: 'game',
     pixelArt: true,
