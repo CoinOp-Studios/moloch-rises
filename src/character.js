@@ -38,7 +38,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.numDice = 2;
         this.diceSides = 6;
 
-        this.initStatsFromChain();
+        // this.initStatsFromChain();
     }
 
     // performs a move with collision checks
