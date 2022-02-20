@@ -42,9 +42,13 @@ export class Enemy extends Character {
             return;
         }
 
-        if (this.tileX() != nextX && this.tileY() != nextY) {
+        this.pathfinder.stopAvoidingAdditionalPoint(this.tileX(), this.tileY());
+
+        if (this.tileX() != nextX || this.tileY() != nextY) {
             super.moveTileXY(nextX, nextY);
         }
+
+        this.pathfinder.avoidAdditionalPoint(this.tileX(), this.tileY());
     } 
 
     initStatsFromChain() {
