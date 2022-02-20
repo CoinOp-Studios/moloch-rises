@@ -32,8 +32,6 @@ export class CollidableSprite extends Phaser.Physics.Arcade.Sprite {
 
     // performs a move with collision checks
     moveTileXY(x, y) {
-        if (x == 0 && y == 0) return;
-        
         // check collision
         if(this.scene.doesTileCollide(x, y)) {
             // play sound
@@ -52,6 +50,6 @@ export class CollidableSprite extends Phaser.Physics.Arcade.Sprite {
     }
 
     tileY() {
-        return this.y / TILEWIDTH;
+        return this.y / TILEHEIGHT;
     }
 }
