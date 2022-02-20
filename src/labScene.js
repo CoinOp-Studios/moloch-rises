@@ -167,7 +167,7 @@ export class LabScene extends Phaser.Scene {
         }
 
         // start a game
-        let tx = this.board.start(this.avatar.id);
+        //let tx = this.board.start(this.avatar.id);
 
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
