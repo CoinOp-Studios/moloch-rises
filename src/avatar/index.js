@@ -1,14 +1,16 @@
 import { ethers } from "ethers";
 
-import { AVATAR_CONTRACT } from "../config";
+import { AVATAR_CONTRACTS } from "../config";
 import { avatar } from './avatar';
 
-export function getAvatarContract(provider) {
-  return new ethers.Contract(AVATAR_CONTRACT, avatar.abi, provider);
+export async function getAvatarContract(provider) {
+  const network = await provider.getNetwork();
+  const chainId = `0x${network.chainId.toString(16)}`;
+  return new ethers.Contract(AVATAR_CONTRACTS[chainId], avatar.abi, provider);
 }
 
 export async function getOwnedAvatars(provider, address, callback) {
-  const contract = getAvatarContract(provider);
+  const contract = await getAvatarContract(provider);
   console.log(`getOwnedAvatars(${address})`, contract);
   const count = await contract.balanceOf(address);
   console.log('count', count);
