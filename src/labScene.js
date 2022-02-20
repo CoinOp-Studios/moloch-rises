@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import EasyStar from 'easystarjs';
 import { Player } from './player';
 import { Enemy } from './enemy';
+import { getBoardContract, getAvatarContract } from './contractAbi'
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png"
