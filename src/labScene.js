@@ -4,7 +4,7 @@ import { Player } from './player';
 import { Enemy } from './enemy';
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
-import defaultEnemySpritesheet from "./assets/sprites/Droids_v2 .png"
+import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png"
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
 
@@ -14,7 +14,7 @@ export const TILEHEIGHT = 64;
 export const NUM_ENEMIES = 3;
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
-const ENEMY_SPRITE_SIZE_PX = 1024;
+const ENEMY_SPRITE_SIZE_PX = 64;
 const WALKABLE_RANGES = [
     [1,3], [26,28], [51, 53], [76,78], [101, 103], [126, 128], [183, 185], [189, 200]
 ];
