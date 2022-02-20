@@ -6,6 +6,6 @@ export class VrfProvider {
     // i.e., rolling a 'sided' die
     // returns a value between 1 + 'sides', inlusive
     roll(sides) {
-        Math.floor(Math.random() * sides) + 1;
+        return Math.floor(Math.random() * sides) + 1;
     }
 }
