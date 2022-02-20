@@ -45,6 +45,8 @@ export class LabScene extends Phaser.Scene {
         this.moveHistory = [];
     }
 
+    //////////////// PHASER LIFECYLE //////////////////////////
+
     preload() {
         this.load.image('tiles', defaultTileset);
         this.load.tilemapCSV('map', tilemapCsv);
