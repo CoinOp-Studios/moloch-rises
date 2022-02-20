@@ -41,7 +41,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     // performs a move with collision checks
     moveTileXY(x, y) {
         // check collision
-        if(this.scene.doesTileCollide(x, y)) {
+        if (this.scene.doesTileCollide(x, y)) {
             // play sound
             this.playSound('collide');
             return;
@@ -118,7 +118,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     takeDamage(damageDealt) {
-        var damageReceived = damageDealt - this.dp;
+        var damageReceived = Math.max(0, damageDealt - this.dp);
 
         // animate damage done
         this.animateDamage(damageDealt, damageReceived);
