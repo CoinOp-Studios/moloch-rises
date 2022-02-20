@@ -47,3 +47,5 @@ const gameConfig = {
 
 const wallet = new Phaser.Game(walletConfig);
 const game = new Phaser.Game(gameConfig);
+
+wallet.gameScene = game.scene;

@@ -42,6 +42,7 @@ export class LabScene extends Phaser.Scene {
         this.lastInputTime = 0;
         this.lastInput = 0;
         this.minInputDelayMs = 50;
+        this.avatar = null;
 
         // web3 provider
         this.provider = null;

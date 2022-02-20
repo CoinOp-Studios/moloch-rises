@@ -37,6 +37,7 @@ export class WalletScene extends Phaser.Scene {
     avatars = [];
     currentAvatar = null;
     avatarButtonImage = null;
+    gameScene = null;
 
     constructor() {
         super();
@@ -222,6 +223,7 @@ export class WalletScene extends Phaser.Scene {
             }
             this.setSpriteFrame('playerButton', false);
         });
+        this.gameScene.provider = provider;
         return true;
     }
 
