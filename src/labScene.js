@@ -139,7 +139,7 @@ export class LabScene extends Phaser.Scene {
         // block until wallet is connected 
         if (this.provider == null) {
             if (this.connectWalletPrompt == null) {
-                this.connectWalletPrompt = this.add.text(16, 16, "please connect a wallet to continue!", {fontSize: '40px'});
+                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet to continue!", {fontSize: '40px'});
             }
             // check via the scene manager if the user has connected to the wallet scene
             var walletScene = this.scene.manager.getScene('wallet');
