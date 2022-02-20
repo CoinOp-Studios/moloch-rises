@@ -31,9 +31,9 @@ export const PROVIDER_OPTIONS = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        0x539: SUPPORTED_NETWORKS['0x539'].rpc,
-        0x89: SUPPORTED_NETWORKS['0x89'].rpc,
-        0x13881: SUPPORTED_NETWORKS['0x13881'].rpc,
+        '0x539': SUPPORTED_NETWORKS['0x539'].rpc,
+        '0x89': SUPPORTED_NETWORKS['0x89'].rpc,
+        '0x13881': SUPPORTED_NETWORKS['0x13881'].rpc,
       },
     },
   },

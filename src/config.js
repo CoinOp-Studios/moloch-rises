@@ -1,0 +1,1 @@
+export const AVATAR_CONTRACT = "0xBdb6677e2de8fc3F61fd5D1Bba8DC0cd51B57641";
