@@ -5,7 +5,7 @@ import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
 import scientist_game from './assets/sprites/scientist_game.png';
-import { getOwnedAvatars } from './contractAbi';
+import { getOwnedAvatars, mintAvatar } from './contractAbi';
 import { connect } from './wallet';
 
 const BUTTON_FRAMES = {
