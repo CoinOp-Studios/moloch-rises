@@ -14,6 +14,7 @@ export class Player extends CollidableSprite {
         var dy = 0;
         if (input == null) {
             // idle animation
+            return;
         } else if (input == INPUT.UP) {
             dy = -1;
         } else if (input == INPUT.RIGHT) {
