@@ -13,11 +13,13 @@ export class Enemy extends CollidableSprite {
         if (!playerMoved) return;
 
         // move toward the player
+        var ex = this.tileX();
+        var ey = this.tileY();
         var px = this.scene.player.tileX();
         var py = this.scene.player.tileY();
         var nextX, nextY;
 
-        this.pathfinder.findPath(this.tileX(), this.tileY(), px, py, function( path ) {
+        this.pathfinder.findPath(ex, ey, px, py, function( path ) {
             if (path === null) {
                 console.warn("Path was not found.");
             } else {
