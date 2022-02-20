@@ -13,6 +13,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         //       'spawn', 'death', 'generic'
         // the values will be lists of dialogue strings 
         this.dialogue = config['dialogue'];
+        this.currentDialogue = null;
 
         this.vrfProvider = vrfProvider;
 
@@ -135,8 +136,47 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    animateDialogue(dialogueName) {
+    fadeCurrentDialogue() {
+        if (this.currentDialogue != null) {
+            var fadeDeltaPerUpdate = 1/60.0;
+            // hacky
+            this.currentDialogue.alpha -= fadeDeltaPerUpdate
+            if (this.currentDialogue.alpha <= fadeDeltaPerUpdate){
+                this.currentDialogue.destroy()
+                this.currentDialogue = null;
+            }
+        }
+    }
 
+    updateAnimations() {
+        this.fadeCurrentDialogue();
+    }
+
+    // animates a random dialogue choice in the supplied category
+    animateDialogue(dialogueName) { 
+        if (this.currentDialogue == null) {
+            var dialogueCategory =  this.dialogue[dialogueName];
+            var dialogueToDisplay = dialogueCategory[Math.floor(Math.random()*dialogueCategory.length)];
+
+            var text = this.scene.add.text(
+                this.x + TILEWIDTH / 2, // center the text
+                this.y - TILEHEIGHT / 2,
+                dialogueToDisplay, 
+                { font: "12px Consolas Black", fill: "#000000" });
+            text.stroke = "#de77ae";
+            text.strokeThickness = 14;
+
+            this.scene.physics.world.enable([ text ]);
+
+            // text floats up
+            text.body.velocity.setTo(0, -20);
+            text.body.collideWorldBounds = true;
+
+            this.currentDialogue = text;
+        }
+        else {
+            console.log("%s: current dialogue not null", this.getName());
+        }
     }
 
     animateDamage(dealt, received) {

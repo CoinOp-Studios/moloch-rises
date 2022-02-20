@@ -324,7 +324,7 @@ const phaserConfig = {
             gravity: { y: 0 }
         }
     },
-    scene: WalletConnect,
+    scene: LabScene,
 };
 
 const game = new Phaser.Game(phaserConfig);

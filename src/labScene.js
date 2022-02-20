@@ -8,6 +8,8 @@ import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png"
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
+import * as dialogue from './assets/dialogue.json';
+
 import { VrfProvider } from './vrfProvider';
 import { AbiCoder } from 'ethers/lib/utils';
 
@@ -277,11 +279,15 @@ export class LabScene extends Phaser.Scene {
 
     /////////EMBELLISHMENTS/////////
     getEnemyConfig() {
-        return {};
+        return {
+            "dialogue": dialogue["enemy"]
+        };
     }
 
     getPlayerConfig() {
-        return {};
+        return {
+            "dialogue": dialogue["player"]
+        };
     }
 
     //////////DEBUG///////////////
