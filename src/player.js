@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 
-import { CollidableSprite } from './collidableSprite';
+import { Character } from './character';
 import { INPUT, TILEHEIGHT, TILEWIDTH } from './labScene';
 
-export class Player extends CollidableSprite {
+export class Player extends Character {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
     }

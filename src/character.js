@@ -1,6 +1,6 @@
 import { TILEHEIGHT, TILEWIDTH, INPUT } from './labScene';
 
-export class CollidableSprite extends Phaser.Physics.Arcade.Sprite {
+export class Character extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, config = {}) {
         super(scene, x, y, texture, frame);
         // config['sounds'] should be a dictionary with the following keys:
