@@ -1,18 +1,21 @@
 {
     "player": {
         "generic": [
-            "You’re going down Moloch!",
-            "You don’t stand a chance, Moloch!",
             "Humanity will prevail!",
             "You just don’t get it, do you? Humanity is here to stay.",
             "How could you do this to us?",
             "One way or another, you will lose.",
             "Nice try…",
             "My previous bots… this will set us back years!",
-            "XYZ Industries will outlast anything you throw at us!",
-            "I’m stronger than I look!",
-            "I will destroy you all!"
+            "XYZ Industries will outlast anything you throw at us!"
+        ],
+        "attack": [
+            "You’re going down Moloch!",
+            "You don’t stand a chance, Moloch!",
+            "I will destroy you all!",
+            "I’m stronger than I look!"
         ]
+        
     },
     "enemy": {
         "generic" : [
