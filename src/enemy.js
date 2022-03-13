@@ -67,8 +67,4 @@ export class Enemy extends Character {
         // change sprite
         this.setFrame(this.frame.name + 1);
     }
-
-    animateDamage(received, blocked) {
-        this.animateDamageStats(received, blocked);
-    }
 }
