@@ -192,7 +192,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
-    animateDamage(received, blocked) {
+    animateDamageStats(received, blocked) {
         if (this.currentDamageReceived == null && this.currentDamageBlocked == null){
             // crimson and grey colors with staggering
             this.currentDamageReceived = this.animateText(received, this.x + 20, this.y + TILEHEIGHT, "#dc143c", 20);

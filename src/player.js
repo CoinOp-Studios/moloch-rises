@@ -75,4 +75,9 @@ export class Player extends Character {
         // play death animation + sound
         console.log("%s: killing!", this.getName());
     }
+
+    animateDamage(received, blocked) {
+        this.animateDamageStats(received, blocked);
+        this.scene.cameras.main.shake(500, 0.01);
+    }
 }
