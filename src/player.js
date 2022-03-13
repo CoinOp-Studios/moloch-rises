@@ -77,7 +77,7 @@ export class Player extends Character {
     }
 
     animateDamage(received, blocked) {
-        this.animateDamageStats(received, blocked);
+        super.animateDamage(received, blocked);
         this.scene.cameras.main.shake(500, 0.01);
     }
 }
