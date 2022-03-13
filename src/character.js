@@ -13,13 +13,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         //       'spawn', 'death', 'generic'
         // the values will be lists of dialogue strings 
         this.dialogue = config['dialogue'];
-        this.currentDialogue = null;
-        this.currentDamageBlocked = null;
-        this.currentDamageReceived = null;
+
+        this.currentAnimations = {};
 
         this.vrfProvider = vrfProvider;
 
-        // the top left pixel of the player is the
+        // the top left pixel of the character is the
         // "anchor" for its x and y coordinates, as opposed
         // to the center
         this.setOrigin(0, 0);
@@ -140,18 +139,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     }
 
-    fadeCurrentDialogue() {
-        if (this.currentDialogue != null) {
-            var fadeDeltaPerUpdate = 1/60.0;
-            // hacky
-            this.currentDialogue.alpha -= fadeDeltaPerUpdate
-            if (this.currentDialogue.alpha <= fadeDeltaPerUpdate){
-                this.currentDialogue.destroy()
-                this.currentDialogue = null;
-            }
-        }
-    }
-
     fadeText(textObject) {
         if (textObject != null) {
             var fadeDeltaPerUpdate = 1/60.0;
@@ -166,16 +153,16 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateAnimations() {
-        if (this.fadeText(this.currentDialogue)) {
-            this.currentDialogue = null;
+        if (this.fadeText(this.currentAnimations['dialogue'])) {
+            this.currentAnimations['dialogue'] = null;
         }
 
-        if (this.fadeText(this.currentDamageReceived)){
-            this.currentDamageReceived = null;
+        if (this.fadeText(this.currentAnimations['damageReceived'])){
+            this.currentAnimations['damageReceived'] = null;
         }
 
-        if (this.fadeText(this.currentDamageBlocked)) {
-            this.currentDamageBlocked = null;
+        if (this.fadeText(this.currentAnimations['damageBlocked'])) {
+            this.currentAnimations['damageBlocked'] = null;
         }
     }
 
@@ -184,19 +171,28 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         if (this.currentDialogue == null) {
             var dialogueCategory =  this.dialogue[dialogueName];
             var dialogueToDisplay = dialogueCategory[Math.floor(Math.random()*dialogueCategory.length)];
-            var text = this.animateText(dialogueToDisplay, this.x - TILEWIDTH/2, this.y, "#000000");
-            this.currentDialogue = text;
+            var dialogue = this.animateText(dialogueToDisplay, this.x - TILEWIDTH/2, this.y, "#000000");
+            this.currentAnimations['dialogue'] = dialogue;
         }
         else {
             console.log("%s: current dialogue not null", this.getName());
         }
     }
 
+    animateDamage(received, blocked) {
+        this.playDamageAnimation();
+        this.animateDamageStats(received, blocked);
+    }
+
+    playDamageAnimation() {
+        //this.currentDamageAnimation 
+    }
+
     animateDamageStats(received, blocked) {
-        if (this.currentDamageReceived == null && this.currentDamageBlocked == null){
+        if (this.currentAnimations['damageReceived'] == null && this.currentAnimations['damageBlocked'] == null){
             // crimson and grey colors with staggering
-            this.currentDamageReceived = this.animateText(received, this.x + 20, this.y + TILEHEIGHT, "#dc143c", 20);
-            this.currentDamageBlocked = this.animateText(blocked, this.x + TILEWIDTH - 20, this.y + TILEHEIGHT, "#bec2cb", 20);
+            this.currentAnimations['damageReceived'] = this.animateText(received, this.x + 20, this.y + TILEHEIGHT, "#dc143c", 20);
+            this.currentAnimations['damageBlocked'] = this.animateText(blocked, this.x + TILEWIDTH - 20, this.y + TILEHEIGHT, "#bec2cb", 20);
         }
     }
 
