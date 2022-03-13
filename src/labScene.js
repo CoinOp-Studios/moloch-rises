@@ -96,8 +96,8 @@ export class LabScene extends Phaser.Scene {
         // SPAWN SPRITES
         this.player = new Player(
             this,
-            1,
-            3,
+            2,
+            5,
             'player',
             0, // frame
             this.getPlayerConfig(),
@@ -132,7 +132,6 @@ export class LabScene extends Phaser.Scene {
 
         // CONFIGURE CAMERA
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
-        this.cameras.main.startFollow(this.player);
 
         this.cursors = this.input.keyboard.createCursorKeys();
     }
@@ -161,8 +160,6 @@ export class LabScene extends Phaser.Scene {
         // UPDATE STATE FROM ON CHAIN
         var avatarId = this.avatar[0].id;
         this.player.initStatsFromChain(this.avatar[0]);
-
-        console.log("retrieving game board from on chain")
 
         /*
         getBoardContract(this.provider).then(b => {
@@ -236,9 +233,16 @@ export class LabScene extends Phaser.Scene {
     }
 
     getEnemySpawnPosition(enemyIndex) {
-        var x = 1 + enemyIndex;
-        var y = 12;
-        return [x,y];
+        if (enemyIndex == 0) {
+            return [7,4];
+        }
+        if (enemyIndex == 1) {
+            return [15,1];
+        }
+        if (enemyIndex == 2) {
+            return [20,10];
+        }
+        return [-1,-1];
     }
 
     //////////// TILING & NAVIGATION //////////////////
