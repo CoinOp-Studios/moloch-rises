@@ -17,37 +17,10 @@ class GameWrapper extends Phaser.Scene {
     }
 }
 
-const walletConfig = {
-    type: Phaser.AUTO,
-    width: TILEWIDTH * 13,
-    height: 100,
-    backgroundColor: '#2d2d2d',
-    parent: 'wallet',
-    pixelArt: true,
-    scene: WalletScene,
-};
-
-const gameConfig = {
-    type: Phaser.AUTO,
-    width: TILEWIDTH * 13, // closest to 800
-    height: TILEHEIGHT * 10, // closest to 600 + fringe for buttons
-    backgroundColor: '#2d2d2d',
-    parent: 'game',
-    pixelArt: true,
-    physics: {
-        default: 'arcade',
-        arcade: {
-            gravity: { y: 0 }
-        }
-    },
-    scene: LabScene,
-    walletGame: null
-};
-
 const wrapperConfig = {
     type: Phaser.AUTO,
-    width: TILEWIDTH * 15, // closest to 800
-    height: TILEHEIGHT * 12, // closest to 600 + fringe for buttons
+    width: TILEWIDTH * 22, 
+    height: TILEHEIGHT * 12, 
     backgroundColor: '#2d2d2d',
     parent: 'game',
     pixelArt: true,
