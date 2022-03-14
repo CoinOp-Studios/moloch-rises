@@ -94,6 +94,7 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.enableSync();
         // we recalculate every turn... keeping this low for now
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
+        var vrfProvider = new VrfProvider();
 
         // SPAWN SPRITES
         this.player = new Player(
@@ -103,7 +104,7 @@ export class LabScene extends Phaser.Scene {
             'player',
             0, // frame
             this.getPlayerConfig(),
-            new VrfProvider());
+            vrfProvider);
         this.collidingGameObjects.push(this.player);
 
         for (var i = 0; i < NUM_ENEMIES; i++) {
@@ -115,7 +116,7 @@ export class LabScene extends Phaser.Scene {
                 'enemy_' + i,
                 i * 2, //frame
                 this.getEnemyConfig(), 
-                new VrfProvider());
+                vrfProvider);
 
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
             enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
