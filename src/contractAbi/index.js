@@ -15,7 +15,7 @@ export async function getAvatarContract(provider) {
 export async function getBoardContract(provider) {
   const network = await provider.getNetwork();
   const chainId = `0x${network.chainId.toString(16)}`;
-  return new ethers.Contract(BOARD_CONTRACTS[chainId], board.abi, provider.getSigner(0));
+  return new ethers.Contract(BOARD_CONTRACTS[chainId], board.abi, provider);
 }
 
 export async function getOwnedAvatars(provider, address) {
