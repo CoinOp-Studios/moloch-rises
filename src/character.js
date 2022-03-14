@@ -1,5 +1,6 @@
 import { TILEHEIGHT, TILEWIDTH, INPUT } from './labScene';
 import { VrfProvider } from './vrfProvider';
+import { Constants } from './constants';
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
@@ -141,7 +142,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     fadeText(textObject) {
         if (textObject != null) {
-            var fadeDeltaPerUpdate = 1/60.0;
+            var fadeDeltaPerUpdate = Constants.FADE_TEXT_RATE;
             // hacky
             textObject.alpha -= fadeDeltaPerUpdate
             if (textObject.alpha <= fadeDeltaPerUpdate){
@@ -196,17 +197,33 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     animateDamageStats(received, blocked) {
         if (this.currentAnimations['damageReceived'] == null && this.currentAnimations['damageBlocked'] == null){
             // crimson and grey colors with staggering
-            this.currentAnimations['damageReceived'] = this.animateText(received, this.x + 20, this.y + TILEHEIGHT, "#dc143c", 20);
-            this.currentAnimations['damageBlocked'] = this.animateText(blocked, this.x + TILEWIDTH - 20, this.y + TILEHEIGHT, "#bec2cb", 20);
+            this.currentAnimations['damageReceived'] = this.animateText(
+                received,
+                this.x + Constants.DAMAGE_X_OFFSET_PX,
+                this.y + TILEHEIGHT,
+                Constants.DAMAGE_RECEIVED_COLOR,
+                Constants.DAMAGE_FONT_SIZE);
+            this.currentAnimations['damageBlocked'] = this.animateText(
+                blocked,
+                this.x + TILEWIDTH - Constants.DAMAGE_X_OFFSET_PX,
+                this.y + TILEHEIGHT,
+                Constants.DAMAGE_BLOCKED_COLOR,
+                Constants.DAMAGE_FONT_SIZE);
         }
     }
 
-    animateText(textToDisplay, x = this.x, y = this.y, color = "#000000", size = 12) {
+    animateText(
+        textToDisplay,
+        x = this.x,
+        y = this.y,
+        color = Constants.DEFAULT_FONT_COLOR,
+        size = Constants.DEFAULT_FONT_SIZE) 
+    {
         var text = this.scene.add.text(
             x, // center the text
             y,
             textToDisplay, 
-            { fontFamily: "Consolas", fontSize: size + "px" , fill: color });
+            { fontFamily: Constants.DEFAULT_FONT, fontSize: size + "px" , fill: color });
         text.stroke = "#de77ae";
         text.strokeThickness = 14;
 
