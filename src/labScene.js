@@ -77,7 +77,7 @@ export class LabScene extends Phaser.Scene {
                 }
             );
         }
-        this.load.spritesheet('damageAnimation', damageSpritesheet, { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('damageSprites', damageSpritesheet, { frameWidth: 32, frameHeight: 32 });
     }
 
     create () {
@@ -123,6 +123,14 @@ export class LabScene extends Phaser.Scene {
             enemy.initStatsFromChain();
             this.collidingGameObjects.push(enemy);
         }
+
+        // INITIALIZE ANIMATIONS
+        this.anims.create({
+            key: "damageAnimation",
+            //frameRate:, 
+            frames: this.anims.generateFrameNumbers("damageSprites", {}),
+            repeat: 0
+        });
 
         this.physics.add.collider(this.player, layer);
 

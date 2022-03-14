@@ -185,7 +185,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     playDamageAnimation() {
-        //this.currentDamageAnimation 
+        var dmgSprite = new Phaser.GameObjects.Sprite(this.scene, this.x, this.y, "damageSprites", 0);
+        this.scene.add.existing(dmgSprite);
+        dmgSprite.play({key: "damageAnimation", showOnStart: true});
+        dmgSprite.once(Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE, () => {
+            dmgSprite.destroy();
+        });
     }
 
     animateDamageStats(received, blocked) {
