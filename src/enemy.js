@@ -65,5 +65,6 @@ export class Enemy extends Character {
         this.playSound('death');
 
         // change sprite
+        this.setFrame(this.frame.name + 1);
     }
 }

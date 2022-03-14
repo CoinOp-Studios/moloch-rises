@@ -5,7 +5,8 @@ import { Enemy } from './enemy';
 import { getBoardContract, getAvatarContract } from './contractAbi'
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
-import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png"
+import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png";
+import damageSpritesheet from "./assets/animations/explosionSheet.png";
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
 import * as dialogue from './assets/dialogue.json';
@@ -76,6 +77,7 @@ export class LabScene extends Phaser.Scene {
                 }
             );
         }
+        this.load.spritesheet('damageSprites', damageSpritesheet, { frameWidth: 32, frameHeight: 32 });
     }
 
     create () {
@@ -121,6 +123,14 @@ export class LabScene extends Phaser.Scene {
             enemy.initStatsFromChain();
             this.collidingGameObjects.push(enemy);
         }
+
+        // INITIALIZE ANIMATIONS
+        this.anims.create({
+            key: "damageAnimation",
+            //frameRate:, 
+            frames: this.anims.generateFrameNumbers("damageSprites", {}),
+            repeat: 0
+        });
 
         this.physics.add.collider(this.player, layer);
 
