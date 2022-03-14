@@ -6,7 +6,7 @@ import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
 import scientist_game from './assets/sprites/scientist_game.png';
 import { getOwnedAvatars, mintAvatar } from './contractAbi';
-import { connect } from './wallet';
+import { connect, web3Modal } from './wallet';
 
 const BUTTON_FRAMES = {
     INACTIVE: 8,
@@ -29,7 +29,7 @@ const makeAvatarChoice = (avatar, index, key, callback) => {
 
 export class WalletScene extends Phaser.Scene {
     sprites = {};
-    spriteFrames = { 'wallet': BUTTON_FRAMES.INACTIVE, 'playerButton': BUTTON_FRAMES.INACTIVE };
+    spriteFrames = { 'wallet': BUTTON_FRAMES.INACTIVE, 'playerButton': BUTTON_FRAMES.INACTIVE, 'offlineButton': BUTTON_FRAMES.INACTIVE };
     provider = null;
     account = '';
     walletButtonEmitter = null;
@@ -65,6 +65,11 @@ export class WalletScene extends Phaser.Scene {
         const playerButton = this.add.sprite(width - 150, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
         playerButton.setScale(0.35);
         this.sprites.playerButton = playerButton;
+
+        const offlineButton = this.add.sprite(width - 250, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
+        offlineButton.setScale(0.35);
+        this.sprites.offlineButton = offlineButton;
+        this.makeOfflineButtonInteractive(offlineButton);
 
         const particles = this.add.particles('flares');
         this.walletButtonEmitter = particles.createEmitter({
@@ -136,14 +141,17 @@ export class WalletScene extends Phaser.Scene {
         wallet.on('pointerdown', this.onClick, this);
     }
 
+    makeOfflineButtonInteractive(offlineButton) {
+        const hitArea = new Phaser.Geom.Circle(50, 50, 100);
+        offlineButton.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
+        offlineButton.on('pointerover', this.onOfflineOver, this);
+        offlineButton.on('pointerout', this.onOfflineOut, this);
+        offlineButton.on('pointerdown', this.onOfflineClick, this);
+    }
+
     async onClick(button) {
         if (this.connected) {
-            console.log('disconnected');
-            this.spriteFrames.wallet = BUTTON_FRAMES.INACTIVE;
-            this.setSpriteFrame('wallet', false);
-            this.connected = false;
-            this.provider.disconnect();
-            this.walletButtonEmitter.start();
+            this.disconnectWallet();
             return;
         }
         console.log('connecting', button);
@@ -169,6 +177,32 @@ export class WalletScene extends Phaser.Scene {
         this.toggleAvatarSelect(true);
     }
 
+    async onOfflineClick(button) {
+        console.log('click offline', button);
+        if (this.offline) {
+            /*
+            this.offline = false;
+            this.makePlayerButtonInteractive(this.sprites.playerButton);
+            this.makeWalletButtonInteractive(this.sprites.wallet);
+            this.spriteFrames.offlineButton = BUTTON_FRAMES.INACTIVE;
+            this.walletButtonEmitter.start();
+            */
+            // if the user opts in to offline, it's locked in until page refresh
+            // for now
+            return;
+        }
+        // disable wallet + player select buttons
+        console.log('enable offline', button);
+        this.sprites.wallet.removeInteractive();
+        this.sprites.playerButton.removeInteractive();
+        await this.disconnectWallet();
+        this.walletButtonEmitter.stop();
+        this.spriteFrames.wallet = BUTTON_FRAMES.INACTIVE;
+        this.spriteFrames.playerButton = BUTTON_FRAMES.INACTIVE;
+        this.spriteFrames.offlineButton = BUTTON_FRAMES.CONNECTED;
+        this.offline = true;
+    }
+
     onOver(button) {
         this.setSpriteFrame('wallet', true);
         console.log('over', button);
@@ -179,14 +213,24 @@ export class WalletScene extends Phaser.Scene {
         console.log('over player', button);
     }
 
+    onOfflineOver(button) {
+        this.setSpriteFrame('offlineButton', true);
+        console.log('over offline', button);
+    }
+
     onOut(button) {
         this.setSpriteFrame('wallet', false);
         console.log('out', button);
     }
 
     onPlayerOut(button) {
-        this.setSpriteFrame('playerButton', true);
+        this.setSpriteFrame('playerButton', false);
         console.log('out player', button);
+    }
+
+    onOfflineOut(button) {
+        this.setSpriteFrame('offlineButton', false);
+        console.log('out offline', button);
     }
 
     setSpriteFrame(key, hover) {
@@ -217,6 +261,11 @@ export class WalletScene extends Phaser.Scene {
             }
             if (this.currentAvatar) {
                 this.spriteFrames.playerButton = BUTTON_FRAMES.CONNECTED;
+                // for now, this will be a terminal state until page refresh
+                // you won't be able to switch avatars until your next game
+                this.sprites.wallet.removeInteractive();
+                this.sprites.playerButton.removeInteractive();
+                this.sprites.offlineButton.removeInteractive();
             } else {
                 this.spriteFrames.playerButton = BUTTON_FRAMES.CONNECTING;
                 this.playerButtonEmitter.active = true;
@@ -233,7 +282,7 @@ export class WalletScene extends Phaser.Scene {
         this.currentAvatar = [avatar, index];
         this.toggleAvatarSelect(false);
         this.avatarButtonImage = this.add.image(width - 150, 50, 'scientist');
-        this.updateConnectionStatus();
+        this.updateConnectionStatus(this.provider);
     }
 
     updateOwnedAvatars(provider, account) {
@@ -261,5 +310,21 @@ export class WalletScene extends Phaser.Scene {
         getOwnedAvatars(provider, account).then((avatars) => {
             avatars.forEach(addAvatar);
         });
+    }
+
+    async disconnectWallet() {
+        console.log('disconnected');
+        this.spriteFrames.wallet = BUTTON_FRAMES.INACTIVE;
+        this.spriteFrames.playerButton = BUTTON_FRAMES.INACTIVE;
+        this.playerButtonEmitter.stop();
+        this.setSpriteFrame('wallet', false);
+        if (this.provider != null && this.connected) {
+            // If the cached provider is not cleared,
+            // WalletConnect will default to the existing session
+            // and does not allow to re-scan the QR code with a new wallet.
+            await web3Modal.clearCachedProvider();
+        }
+        this.connected = false;
+        this.walletButtonEmitter.start();
     }
 }

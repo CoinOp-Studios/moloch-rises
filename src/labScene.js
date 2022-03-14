@@ -47,7 +47,7 @@ export class LabScene extends Phaser.Scene {
         this.board = null;
 
         // web3 provider
-        this.connectWalletPrompt = null;
+        this.modeSelectPrompt = null;
         this.provider = null;
 
         // game objects with collision which need to
@@ -148,29 +148,24 @@ export class LabScene extends Phaser.Scene {
     }
 
     update (time, delta) {
-        // block until wallet is connected 
-        if (this.provider == null || this.avatar == null) {
-            if (this.connectWalletPrompt == null) {
-                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", {fontSize: '20px'});
+        // block until either:
+        //      wallet is connected  & avatar selected
+        // OR   opted-out of wallet, default avatar used 
+        if (!this.getGameModeAndAvatar()) {
+            if (this.modeSelectPrompt == null) {
+                this.modeSelectPrompt = this.add.text(16, 100, "please play offline, or connect a wallet & avatar to continue!", {fontSize: '20px'});
             }
-            // check via the scene manager if the user has connected to the wallet scene
-            var walletScene = this.scene.manager.getScene('wallet');
-            this.provider = walletScene.provider;
-            this.avatar = walletScene.currentAvatar;
-
-            // spin until the user connects a wallet
-
             return;
         }
 
-        if (this.connectWalletPrompt != null) {
-            this.connectWalletPrompt.destroy();
-            this.connectWalletPrompt = null;
+        if (this.modeSelectPrompt != null) {
+            this.modeSelectPrompt.destroy();
+            this.modeSelectPrompt = null;
         }
         
         // UPDATE STATE FROM ON CHAIN
         var avatarId = this.avatar[0].id;
-        this.player.initStatsFromChain(this.avatar[0]);
+        this.player.initStatsFromAvatar(this.avatar[0]);
 
         /*
         getBoardContract(this.provider).then(b => {
@@ -178,13 +173,14 @@ export class LabScene extends Phaser.Scene {
         });
         if (this.board == null) {
             return;
-        }
-        
-        // start a game
-        var startResult = null;
-        this.board.start(this.avatar.id).then(g => {
+        }*/
 
-        });*/
+        /*
+            Game connection logic
+
+            Check if the selected avatar currently has an ongoing game
+
+        */ 
 
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
@@ -310,6 +306,30 @@ export class LabScene extends Phaser.Scene {
 
     getSeedFromBoardContact() {
 
+    }
+
+    getGameModeAndAvatar() {
+        // check via the scene manager if the user has connected to the wallet scene
+        var walletScene = this.scene.manager.getScene('wallet');
+        
+        // check if the user has either opted for offline play, or connected a wallet and avatar
+        if (walletScene.provider != null && walletScene.currentAvatar != null) {
+            this.provider = walletScene.provider;
+            this.avatar = walletScene.currentAvatar;
+            return true;
+        }
+        else if (walletScene.offline) {
+            this.avatar = this.getOfflineAvatar();
+            return true;
+        }
+
+        return false;
+    }
+
+    getOfflineAvatar() {
+        return JSON.parse(
+            '[{"id":"0x0","fields":{"name":"Alcibiades","description":"An avatar ready to fight moloch.","image":"ipfs://bafkreib4ftqeobfmdy7kvurixv55m7nqtvwj3o2hw3clsyo3hjpxwo3sda","attributes":[{"trait_type":"HP","value":3},{"trait_type":"AP","value":1},{"trait_type":"DP","value":1},{"trait_type":"Armor","value":"Worn Lab Coat"},{"trait_type":"Weapon","value":"Used Plasma Cutter"},{"trait_type":"Implant","value":"No Implant"},{"trait_type":"Experience","value":0}]}},0]'
+        );
     }
 
     /////////EMBELLISHMENTS/////////

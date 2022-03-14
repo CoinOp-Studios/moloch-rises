@@ -64,7 +64,7 @@ export class Player extends Character {
         return attacked;
     }
 
-    initStatsFromChain(avatar) {
+    initStatsFromAvatar(avatar) {
         var id = avatar.id;
         this.hp = avatar.fields.attributes[0].value;
         this.ap = avatar.fields.attributes[1].value;
