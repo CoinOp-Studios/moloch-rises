@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 
-import roundButtons from './assets/buttons-round-200x201.png'
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
@@ -8,11 +7,16 @@ import scientist_game from './assets/sprites/scientist_game.png';
 import { getOwnedAvatars, mintAvatar } from './contractAbi';
 import { connect } from './wallet';
 
+const PLAYER_COLOR = ['pink', 'blue', 'gold'][Math.floor(Math.random() * 3)];
+
 const BUTTON_FRAMES = {
-    INACTIVE: 8,
-    CONNECTING: 4,
-    CONNECTED: 6,
+    INACTIVE: `tiles/buttons/help-${PLAYER_COLOR}`,
+    INVALID: 'tiles/buttons/help-gray',
+    CONNECTING: `tiles/buttons/info-${PLAYER_COLOR}`,
+    CONNECTED: `tiles/buttons/tick-${PLAYER_COLOR}`,
 };
+
+console.log(`BUTTON_FRAMES: ${JSON.stringify(BUTTON_FRAMES)}`);
 
 const makeAvatarChoice = (avatar, index, key, callback) => {
     const choice = document.createElement('li');
@@ -29,7 +33,7 @@ const makeAvatarChoice = (avatar, index, key, callback) => {
 
 export class WalletScene extends Phaser.Scene {
     sprites = {};
-    spriteFrames = { 'wallet': BUTTON_FRAMES.INACTIVE, 'playerButton': BUTTON_FRAMES.INACTIVE };
+    spriteFrames = { 'wallet': BUTTON_FRAMES.INVALID, 'playerButton': BUTTON_FRAMES.INACTIVE };
     provider = null;
     account = '';
     walletButtonEmitter = null;
@@ -44,26 +48,22 @@ export class WalletScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.spritesheet('roundButtons', roundButtons, {
-            frameWidth: 200,
-            frameHeight: 201,
-            endFrame: 9,
-        });
         this.load.atlas('flares', flares, flaresJson);
         this.load.image('spark', sparklePng);
         this.load.image('scientist', scientist_game);
+        this.load.multiatlas('ui', 'assets/moloch.json', 'assets');
     }
 
     create() {
         const { width, height } = this.scale;
         console.log('width', width, 'height', height);
-        const walletConnectButton = this.add.sprite(width - 50, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
-        walletConnectButton.setScale(0.35);
+        const walletConnectButton = this.add.sprite(width - 50, 50, 'ui', BUTTON_FRAMES.INACTIVE);
+        walletConnectButton.setScale(0.5);
         this.sprites.wallet = walletConnectButton;
         this.makeWalletButtonInteractive(walletConnectButton);
 
-        const playerButton = this.add.sprite(width - 150, 50, 'roundButtons', BUTTON_FRAMES.INACTIVE);
-        playerButton.setScale(0.35);
+        const playerButton = this.add.sprite(width - 150, 50, 'ui', BUTTON_FRAMES.INVALID);
+        playerButton.setScale(0.5);
         this.sprites.playerButton = playerButton;
 
         const particles = this.add.particles('flares');
