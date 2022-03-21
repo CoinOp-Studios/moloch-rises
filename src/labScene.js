@@ -277,13 +277,13 @@ export class LabScene extends Phaser.Scene {
 
     //////////// TILING & NAVIGATION //////////////////
     getTileID(x, y) {
-        var tile = this.map.getTileAt(x, y);
+        const tile = this.map.getTileAt(x, y);
         return tile.index;
     }
 
     // checks if a tile at coordinate x,y has collision enabled
     doesTileCollide(x,y) {
-        var nextTile = this.map.getTileAt(x, y);
+        const nextTile = this.map.getTileAt(x, y);
         return nextTile == null || this.doesTileIDCollide(nextTile.index);
     }
 
@@ -327,32 +327,69 @@ export class LabScene extends Phaser.Scene {
 
     //////////ON-CHAIN INTERACTIONS////////////
 
-    getSeedFromBoardContact() {
+    /// returns true if:
+    ///     offline mode is selected 
+    /// OR  wallet is connected, avatar selected, board state retrieved
+    /// and false otherwise  
+    initGameState() {
+        // If the game mode has been set, then the requisited state has been
+        //  retrieved
+        if (this.gameMode == GAME_MODE.OFFLINE || this.gameMode == GAME_MODE.ONLINE)
+            return true;
 
-    }
-
-    getGameModeAndAvatar() {
+        var initialized = false;
         // check via the scene manager if the user has connected to the wallet scene
         var walletScene = this.scene.manager.getScene('wallet');
-        
+       
+        let seed;
         // check if the user has either opted for offline play, or connected a wallet and avatar
-        if (walletScene.provider != null && walletScene.currentAvatar != null) {
+        if (walletScene.provider != null && walletScene.currentAvatar != null && walletScene.boardContract != null) {
             this.provider = walletScene.provider;
             this.avatar = walletScene.currentAvatar;
-            return true;
+            this.board = walletScene.boardContract;
+            this.gameMode = GAME_MODE.ONLINE;
+            initialized = true;
         }
         else if (walletScene.offline) {
             this.avatar = this.getOfflineAvatar();
-            return true;
+            this.board = this.getOfflineBoard();
+            this.gameMode = GAME_MODE.OFFLINE;
+            initialized = true;
         }
 
-        return false;
+        if (initialized) {
+            this.initGameStateFromBoard(this.board);
+            this.player.initStatsFromAvatar(this.avatar[0]);
+        }
+
+        return initialized;
+    }
+
+    initGameStateFromBoard(boardContract) {
+        this.enemies.forEach(enemy => {
+            if (this.gameMode == GAME_MODE.OFFLINE) {
+                enemy.initOfflineStats();
+            }
+            if (this.gameMode == GAME_MODE.ONLINE) {
+                enemy.initStats(this.board);
+            }
+        });
+
+        if (this.gameMode == GAME_MODE.OFFLINE)
+            this.turnsRemaining = 50;
+        //TODO
+        if (this.gameMode == GAME_MODE.ONLINE)
+            this.turnsRemaining = 50;
     }
 
     getOfflineAvatar() {
         return JSON.parse(
-            '[{"id":"0x0","fields":{"name":"Alcibiades","description":"An avatar ready to fight moloch.","image":"ipfs://bafkreib4ftqeobfmdy7kvurixv55m7nqtvwj3o2hw3clsyo3hjpxwo3sda","attributes":[{"trait_type":"HP","value":3},{"trait_type":"AP","value":1},{"trait_type":"DP","value":1},{"trait_type":"Armor","value":"Worn Lab Coat"},{"trait_type":"Weapon","value":"Used Plasma Cutter"},{"trait_type":"Implant","value":"No Implant"},{"trait_type":"Experience","value":0}]}},0]'
+            '[{"id":"0x0","fields":{"name":"Alcibiades","description":"An avatar ready to fight moloch.","image":"ipfs://bafkreib4ftqeobfmdy7kvurixv55m7nqtvwj3o2hw3clsyo3hjpxwo3sda","attributes":[{"trait_type":"HP","value":3},{"trait_type":"AP","value":1},{"trait_type":"DP","value":0},{"trait_type":"Armor","value":"Worn Lab Coat"},{"trait_type":"Weapon","value":"Used Plasma Cutter"},{"trait_type":"Implant","value":"No Implant"},{"trait_type":"Experience","value":0}]}},0]'
         );
+    }
+
+    getOfflineBoard() {
+        return {maxTurns: 50};
     }
 
     /////////EMBELLISHMENTS/////////
