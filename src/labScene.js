@@ -159,7 +159,15 @@ export class LabScene extends Phaser.Scene {
         // CONFIGURE CAMERA
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+        // INIT INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        // INIT UI / UX
+        this.turnsRemainingText = this.add.text(16, 50, "TURNS REMAINING:", {
+            fontSize: Constants.TURNS_REMAINING_FONT_SIZE_STRING,
+            fontFamily: Constants.TURNS_REMAINING_FONT_FAMILY
+        });
+        this.turnsRemainingText.setAlpha(0);
     }
 
     update (time, delta) {
