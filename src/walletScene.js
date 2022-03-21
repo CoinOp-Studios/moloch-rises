@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 
+import molochJson from './assets/moloch.json';
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
@@ -53,7 +54,7 @@ export class WalletScene extends Phaser.Scene {
         this.load.atlas('flares', flares, flaresJson);
         this.load.image('spark', sparklePng);
         this.load.image('scientist', scientist_game);
-        this.load.multiatlas('ui', 'assets/moloch.json', 'assets');
+        this.load.multiatlas('ui', molochJson, './assets');
     }
 
     create() {
