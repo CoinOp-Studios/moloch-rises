@@ -21,7 +21,11 @@ module.exports = {
         use: "raw-loader"
       },
       {
-        test: /\.(gif|png|jpe?g|svg|xml|csv|json)$/i,
+        test: /\.(gif|png|jpe?g|svg|xml|csv)$/i,
+        use: "file-loader"
+      },
+      {
+        test: __dirname + "/src/assets/moloch.json",
         use: "file-loader"
       },
       {
