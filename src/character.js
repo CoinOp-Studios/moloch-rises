@@ -1,6 +1,8 @@
-import { TILEHEIGHT, TILEWIDTH, INPUT } from './labScene';
+import * as Constants from './constants';
+import { INPUT } from './labScene';
 import { VrfProvider } from './vrfProvider';
-import { Constants } from './constants';
+
+const { TILEHEIGHT, TILEWIDTH } = Constants;
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y, texture, frame, config = {}, vrfProvider) {
@@ -48,7 +50,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
             // play sound
             this.playSound('collide');
             return;
-        }       
+        }
 
         // move 
         this.setX(x * TILEWIDTH);
@@ -57,7 +59,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         // play sound
         this.playSound('move');
 
-        if (this.vrfProvider.roll(10) == 10){
+        if (this.vrfProvider.roll(10) == 10) {
             this.animateDialogue('generic');
         }
     }
@@ -145,7 +147,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
             var fadeDeltaPerUpdate = Constants.FADE_TEXT_RATE;
             // hacky
             textObject.alpha -= fadeDeltaPerUpdate
-            if (textObject.alpha <= fadeDeltaPerUpdate){
+            if (textObject.alpha <= fadeDeltaPerUpdate) {
                 textObject.destroy()
                 return true;
             }
@@ -158,7 +160,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
             this.currentAnimations['dialogue'] = null;
         }
 
-        if (this.fadeText(this.currentAnimations['damageReceived'])){
+        if (this.fadeText(this.currentAnimations['damageReceived'])) {
             this.currentAnimations['damageReceived'] = null;
         }
 
@@ -168,11 +170,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     // animates a random dialogue choice in the supplied category
-    animateDialogue(dialogueName) { 
+    animateDialogue(dialogueName) {
         if (this.currentDialogue == null) {
-            var dialogueCategory =  this.dialogue[dialogueName];
-            var dialogueToDisplay = dialogueCategory[Math.floor(Math.random()*dialogueCategory.length)];
-            var dialogue = this.animateText(dialogueToDisplay, this.x - TILEWIDTH/2, this.y, "#000000");
+            var dialogueCategory = this.dialogue[dialogueName];
+            var dialogueToDisplay = dialogueCategory[Math.floor(Math.random() * dialogueCategory.length)];
+            var dialogue = this.animateText(dialogueToDisplay, this.x - TILEWIDTH / 2, this.y, "#000000");
             this.currentAnimations['dialogue'] = dialogue;
         }
         else {
@@ -188,14 +190,14 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     playDamageAnimation() {
         var dmgSprite = new Phaser.GameObjects.Sprite(this.scene, this.x, this.y, "damageSprites", 0);
         this.scene.add.existing(dmgSprite);
-        dmgSprite.play({key: "damageAnimation", showOnStart: true});
+        dmgSprite.play({ key: "damageAnimation", showOnStart: true });
         dmgSprite.once(Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE, () => {
             dmgSprite.destroy();
         });
     }
 
     animateDamageStats(received, blocked) {
-        if (this.currentAnimations['damageReceived'] == null && this.currentAnimations['damageBlocked'] == null){
+        if (this.currentAnimations['damageReceived'] == null && this.currentAnimations['damageBlocked'] == null) {
             // crimson and grey colors with staggering
             this.currentAnimations['damageReceived'] = this.animateText(
                 received,
@@ -217,22 +219,21 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         x = this.x,
         y = this.y,
         color = Constants.DEFAULT_FONT_COLOR,
-        size = Constants.DEFAULT_FONT_SIZE) 
-    {
+        size = Constants.DEFAULT_FONT_SIZE) {
         var text = this.scene.add.text(
             x, // center the text
             y,
-            textToDisplay, 
-            { fontFamily: Constants.DEFAULT_FONT, fontSize: size + "px" , fill: color });
+            textToDisplay,
+            { fontFamily: Constants.DEFAULT_FONT, fontSize: size + "px", fill: color });
         text.stroke = "#de77ae";
         text.strokeThickness = 14;
 
-        this.scene.physics.world.enable([ text ]);
+        this.scene.physics.world.enable([text]);
 
         // text floats up
         text.body.velocity.setTo(0, -20);
         text.body.collideWorldBounds = true;
-        
+
         return text;
     }
 }

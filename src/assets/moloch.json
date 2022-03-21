@@ -4,1259 +4,34 @@
 			"image": "moloch.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 2041,
-				"h": 1660
+				"w": 4067,
+				"h": 3403
 			},
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "tiles/buttons/badge-gold",
+					"filename": "moloch",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 134,
-						"h": 135
+						"w": 4065,
+						"h": 2973
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 134,
-						"h": 135
+						"w": 4065,
+						"h": 2973
 					},
 					"frame": {
 						"x": 1,
 						"y": 1,
-						"w": 134,
-						"h": 135
+						"w": 4065,
+						"h": 2973
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/badge-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
 						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 137,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/badge-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 273,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/help-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 408,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/help-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 543,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/help-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 678,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/info-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 814,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/info-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 950,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/info-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 1086,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/music-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 1221,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/music-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 1356,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/music-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 1491,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/profile-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 1627,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/profile-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 1763,
-						"y": 1,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/profile-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 1899,
-						"y": 1,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/replay-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 1,
-						"y": 138,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/replay-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 137,
-						"y": 138,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/replay-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 273,
-						"y": 138,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/setting-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 408,
-						"y": 138,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/setting-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 135
-					},
-					"frame": {
-						"x": 543,
-						"y": 138,
-						"w": 133,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/setting-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 135
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 135
-					},
-					"frame": {
-						"x": 678,
-						"y": 138,
-						"w": 134,
-						"h": 135
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/burgermenu-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 814,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/burgermenu-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 950,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/burgermenu-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 1086,
-						"y": 138,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/close-blue",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1221,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/close-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1357,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/close-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1493,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/close-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 1629,
-						"y": 138,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/home-blue",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1764,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/home-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1900,
-						"y": 138,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/home-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1,
-						"y": 275,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/home-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 137,
-						"y": 275,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/play-blue",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 272,
-						"y": 275,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/play-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 408,
-						"y": 275,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/play-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 543,
-						"y": 275,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/play-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 678,
-						"y": 275,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/plus-blue",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 814,
-						"y": 276,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/plus-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 950,
-						"y": 276,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/plus-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1086,
-						"y": 276,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/plus-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 1222,
-						"y": 276,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/sound-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 1357,
-						"y": 276,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/sound-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 1492,
-						"y": 276,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/sound-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1627,
-						"y": 276,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/tick-blue",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1763,
-						"y": 276,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/tick-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1899,
-						"y": 276,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/tick-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 1,
-						"y": 413,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/tick-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 137,
-						"y": 413,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/trophy-gold",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 272,
-						"y": 413,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/trophy-gray",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 133,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 133,
-						"h": 136
-					},
-					"frame": {
-						"x": 407,
-						"y": 413,
-						"w": 133,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
-					}
-				},
-				{
-					"filename": "tiles/buttons/trophy-pink",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 134,
-						"h": 136
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 134,
-						"h": 136
-					},
-					"frame": {
-						"x": 542,
-						"y": 413,
-						"w": 134,
-						"h": 136
-					},
-					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"y": 0
 					}
 				},
 				{
@@ -1274,14 +49,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 678,
-						"y": 413,
+						"x": 1,
+						"y": 2976,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1299,14 +74,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 814,
-						"y": 414,
+						"x": 1,
+						"y": 3115,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1324,14 +99,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 950,
-						"y": 414,
+						"x": 1,
+						"y": 3254,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1349,14 +124,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1086,
-						"y": 414,
+						"x": 137,
+						"y": 2976,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1374,14 +149,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1222,
-						"y": 414,
+						"x": 137,
+						"y": 3115,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1399,14 +174,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1358,
-						"y": 414,
+						"x": 137,
+						"y": 3254,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1424,14 +199,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1494,
-						"y": 414,
+						"x": 273,
+						"y": 2976,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1449,14 +224,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1630,
-						"y": 414,
+						"x": 273,
+						"y": 3115,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1474,14 +249,14 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1766,
-						"y": 414,
+						"x": 273,
+						"y": 3254,
 						"w": 134,
 						"h": 137
 					},
 					"anchor": {
-						"x": 0.5,
-						"y": 0.5
+						"x": 0,
+						"y": 0
 					}
 				},
 				{
@@ -1499,10 +274,2410 @@
 						"h": 137
 					},
 					"frame": {
-						"x": 1902,
-						"y": 414,
+						"x": 409,
+						"y": 2976,
 						"w": 134,
 						"h": 137
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/blank-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 409,
+						"y": 3115,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/blank-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 409,
+						"y": 3253,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/burgermenu-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 545,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/burgermenu-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 545,
+						"y": 3114,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/close-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 545,
+						"y": 3252,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/close-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 681,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/close-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 681,
+						"y": 3114,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/home-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 681,
+						"y": 3252,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/home-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 817,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/home-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 817,
+						"y": 3114,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/locked",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 817,
+						"y": 3252,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/play-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 953,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/play-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 953,
+						"y": 3114,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/plus-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 953,
+						"y": 3252,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/plus-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1089,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/plus-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1089,
+						"y": 3114,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/sound-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1089,
+						"y": 3252,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/tick-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1225,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/tick-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1225,
+						"y": 3114,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/tick-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1225,
+						"y": 3252,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/trophy-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 136
+					},
+					"frame": {
+						"x": 1361,
+						"y": 2976,
+						"w": 134,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/blank-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1361,
+						"y": 3114,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/blank-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1361,
+						"y": 3252,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/burgermenu-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1496,
+						"y": 3114,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/close-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1497,
+						"y": 2976,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/home-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1496,
+						"y": 3252,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/play-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1631,
+						"y": 3114,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/play-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1632,
+						"y": 2976,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/plus-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1631,
+						"y": 3252,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/sound-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1766,
+						"y": 3114,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/sound-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1767,
+						"y": 2976,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/tick-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1766,
+						"y": 3252,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/trophy-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1901,
+						"y": 3114,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/trophy-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 136
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 136
+					},
+					"frame": {
+						"x": 1902,
+						"y": 2976,
+						"w": 133,
+						"h": 136
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/badge-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 1901,
+						"y": 3252,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/badge-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2036,
+						"y": 3114,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/help-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2037,
+						"y": 2976,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/info-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2037,
+						"y": 3251,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/info-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2172,
+						"y": 3113,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/music-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2173,
+						"y": 2976,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/profile-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2173,
+						"y": 3250,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/profile-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2308,
+						"y": 3113,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/replay-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2309,
+						"y": 2976,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/replay-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2309,
+						"y": 3250,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/setting-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 134,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 134,
+						"h": 135
+					},
+					"frame": {
+						"x": 2444,
+						"y": 3113,
+						"w": 134,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/badge-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2445,
+						"y": 2976,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/help-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2445,
+						"y": 3250,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/help-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2580,
+						"y": 2976,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/info-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2580,
+						"y": 3113,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/music-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2580,
+						"y": 3250,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/music-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2715,
+						"y": 2976,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/profile-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2715,
+						"y": 3113,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/replay-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2715,
+						"y": 3250,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/setting-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2850,
+						"y": 2976,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/setting-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 133,
+						"h": 135
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 133,
+						"h": 135
+					},
+					"frame": {
+						"x": 2850,
+						"y": 3113,
+						"w": 133,
+						"h": 135
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/text-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 290,
+						"h": 110
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 290,
+						"h": 110
+					},
+					"frame": {
+						"x": 2850,
+						"y": 3250,
+						"w": 290,
+						"h": 110
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/cross-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 40
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 40
+					},
+					"frame": {
+						"x": 2850,
+						"y": 3362,
+						"w": 40,
+						"h": 40
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/cross-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 40
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 40
+					},
+					"frame": {
+						"x": 2892,
+						"y": 3362,
+						"w": 40,
+						"h": 40
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/ammo-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 40
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 40
+					},
+					"frame": {
+						"x": 2934,
+						"y": 3362,
+						"w": 39,
+						"h": 40
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/ammo-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 40
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 40
+					},
+					"frame": {
+						"x": 2975,
+						"y": 3362,
+						"w": 39,
+						"h": 40
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/shield-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 34,
+						"h": 40
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 34,
+						"h": 40
+					},
+					"frame": {
+						"x": 3016,
+						"y": 3362,
+						"w": 34,
+						"h": 40
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/shield-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 34,
+						"h": 40
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 34,
+						"h": 40
+					},
+					"frame": {
+						"x": 3052,
+						"y": 3362,
+						"w": 34,
+						"h": 40
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/heart-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 46,
+						"h": 39
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 46,
+						"h": 39
+					},
+					"frame": {
+						"x": 3088,
+						"y": 3362,
+						"w": 46,
+						"h": 39
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/clock-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 39
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 39
+					},
+					"frame": {
+						"x": 3136,
+						"y": 3362,
+						"w": 39,
+						"h": 39
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/text-blue",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 289,
+						"h": 110
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 289,
+						"h": 110
+					},
+					"frame": {
+						"x": 2985,
+						"y": 2976,
+						"w": 289,
+						"h": 110
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/text-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 289,
+						"h": 110
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 289,
+						"h": 110
+					},
+					"frame": {
+						"x": 2985,
+						"y": 3088,
+						"w": 289,
+						"h": 110
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/lock-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 38,
+						"h": 47
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 38,
+						"h": 47
+					},
+					"frame": {
+						"x": 2985,
+						"y": 3200,
+						"w": 38,
+						"h": 47
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/meeple-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 26,
+						"h": 47
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 26,
+						"h": 47
+					},
+					"frame": {
+						"x": 3025,
+						"y": 3200,
+						"w": 26,
+						"h": 47
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/horns-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 43,
+						"h": 46
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 43,
+						"h": 46
+					},
+					"frame": {
+						"x": 3053,
+						"y": 3200,
+						"w": 43,
+						"h": 46
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/meeple-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 26,
+						"h": 46
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 26,
+						"h": 46
+					},
+					"frame": {
+						"x": 3098,
+						"y": 3200,
+						"w": 26,
+						"h": 46
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/star-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 45
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 45
+					},
+					"frame": {
+						"x": 3126,
+						"y": 3200,
+						"w": 47,
+						"h": 45
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/buttons/text-pink",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 289,
+						"h": 110
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 289,
+						"h": 110
+					},
+					"frame": {
+						"x": 3142,
+						"y": 3247,
+						"w": 289,
+						"h": 110
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/diamon-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 45,
+						"h": 43
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 45,
+						"h": 43
+					},
+					"frame": {
+						"x": 3177,
+						"y": 3359,
+						"w": 45,
+						"h": 43
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/target-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 44,
+						"h": 43
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 44,
+						"h": 43
+					},
+					"frame": {
+						"x": 3224,
+						"y": 3359,
+						"w": 44,
+						"h": 43
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/lightning-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 43
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 43
+					},
+					"frame": {
+						"x": 3270,
+						"y": 3359,
+						"w": 40,
+						"h": 43
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/star-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 47,
+						"h": 45
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 47,
+						"h": 45
+					},
+					"frame": {
+						"x": 3175,
+						"y": 3200,
+						"w": 47,
+						"h": 45
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/horns-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 43,
+						"h": 45
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 43,
+						"h": 45
+					},
+					"frame": {
+						"x": 3224,
+						"y": 3200,
+						"w": 43,
+						"h": 45
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/radio-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 46,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 46,
+						"h": 42
+					},
+					"frame": {
+						"x": 3312,
+						"y": 3359,
+						"w": 46,
+						"h": 42
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/radio-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 46,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 46,
+						"h": 42
+					},
+					"frame": {
+						"x": 3360,
+						"y": 3359,
+						"w": 46,
+						"h": 42
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/diamon-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 45,
+						"h": 42
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 45,
+						"h": 42
+					},
+					"frame": {
+						"x": 3408,
+						"y": 3359,
+						"w": 45,
+						"h": 42
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/target-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 44,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 44,
+						"h": 44
+					},
+					"frame": {
+						"x": 3269,
+						"y": 3200,
+						"w": 44,
+						"h": 44
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/frame/Bottom",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 719,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 719,
+						"h": 65
+					},
+					"frame": {
+						"x": 3315,
+						"y": 2976,
+						"w": 719,
+						"h": 65
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/frame/Top",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 719,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 719,
+						"h": 65
+					},
+					"frame": {
+						"x": 3315,
+						"y": 3043,
+						"w": 719,
+						"h": 65
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/hud/section-left-health",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 369,
+						"h": 77
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 369,
+						"h": 77
+					},
+					"frame": {
+						"x": 3276,
+						"y": 3110,
+						"w": 369,
+						"h": 77
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/lightning-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 44
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 44
+					},
+					"frame": {
+						"x": 3315,
+						"y": 3189,
+						"w": 40,
+						"h": 44
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/clock-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 39,
+						"h": 39
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 39,
+						"h": 39
+					},
+					"frame": {
+						"x": 3357,
+						"y": 3189,
+						"w": 39,
+						"h": 39
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/heart-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 46,
+						"h": 38
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 46,
+						"h": 38
+					},
+					"frame": {
+						"x": 3398,
+						"y": 3189,
+						"w": 46,
+						"h": 38
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/hud/section-left-armor",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 369,
+						"h": 76
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 369,
+						"h": 76
+					},
+					"frame": {
+						"x": 3647,
+						"y": 3110,
+						"w": 369,
+						"h": 76
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/fist-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 43,
+						"h": 38
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 43,
+						"h": 38
+					},
+					"frame": {
+						"x": 4018,
+						"y": 3110,
+						"w": 43,
+						"h": 38
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/fist-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 43,
+						"h": 37
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 43,
+						"h": 37
+					},
+					"frame": {
+						"x": 4018,
+						"y": 3150,
+						"w": 43,
+						"h": 37
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/hud/section-right-energy",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 369,
+						"h": 76
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 369,
+						"h": 76
+					},
+					"frame": {
+						"x": 3647,
+						"y": 3188,
+						"w": 369,
+						"h": 76
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/skull-gray",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 38
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 38
+					},
+					"frame": {
+						"x": 4018,
+						"y": 3189,
+						"w": 40,
+						"h": 38
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/icons/skull-yellow",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 40,
+						"h": 37
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 40,
+						"h": 37
+					},
+					"frame": {
+						"x": 4018,
+						"y": 3229,
+						"w": 40,
+						"h": 37
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/hud/section-left",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 176,
+						"h": 76
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 176,
+						"h": 76
+					},
+					"frame": {
+						"x": 3433,
+						"y": 3268,
+						"w": 176,
+						"h": 76
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/hud/section-right",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 175,
+						"h": 76
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 175,
+						"h": 76
+					},
+					"frame": {
+						"x": 3446,
+						"y": 3189,
+						"w": 175,
+						"h": 76
+					},
+					"anchor": {
+						"x": 0,
+						"y": 0
+					}
+				},
+				{
+					"filename": "tiles/tooltip/bottom-left-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 174,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 174,
+						"h": 64
+					},
+					"frame": {
+						"x": 3611,
+						"y": 3268,
+						"w": 174,
+						"h": 64
 					},
 					"anchor": {
 						"x": 0.5,
@@ -1510,28 +2685,78 @@
 					}
 				},
 				{
-					"filename": "moloch",
+					"filename": "tiles/tooltip/bottom-right-gold",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 2039,
-						"h": 1106
+						"w": 174,
+						"h": 64
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 2039,
-						"h": 1106
+						"w": 174,
+						"h": 64
 					},
 					"frame": {
-						"x": 1,
-						"y": 553,
-						"w": 2039,
-						"h": 1106
+						"x": 3611,
+						"y": 3334,
+						"w": 174,
+						"h": 64
 					},
 					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "tiles/tooltip/top-left-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 174,
+						"h": 64
+					},
+					"spriteSourceSize": {
 						"x": 0,
-						"y": 0
+						"y": 0,
+						"w": 174,
+						"h": 64
+					},
+					"frame": {
+						"x": 3787,
+						"y": 3266,
+						"w": 174,
+						"h": 64
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
+					}
+				},
+				{
+					"filename": "tiles/tooltip/top-right-gold",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 174,
+						"h": 64
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 174,
+						"h": 64
+					},
+					"frame": {
+						"x": 3787,
+						"y": 3332,
+						"w": 174,
+						"h": 64
+					},
+					"anchor": {
+						"x": 0.5,
+						"y": 0.5
 					}
 				}
 			]
@@ -1540,6 +2765,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:da1600aceabfdc654023ce26ab3e0701:e4059c4ecde7e59f55fb9a9b7f2478e4:66a5361c13ae466665f95d45a4d7b582$"
+		"smartupdate": "$TexturePacker:SmartUpdate:047c5865f4ecb8f1581f0c13dce3d658:b8cbc9ef39432358ad3a4df7472b647a:66a5361c13ae466665f95d45a4d7b582$"
 	}
 }

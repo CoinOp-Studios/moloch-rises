@@ -1,28 +1,26 @@
-import Phaser from 'phaser';
 import EasyStar from 'easystarjs';
-import { Player } from './player';
-import { Enemy } from './enemy';
-import { getBoardContract, getAvatarContract } from './contractAbi'
+import { AbiCoder } from 'ethers/lib/utils';
+import Phaser from 'phaser';
 
-import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
-import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png";
 import damageSpritesheet from "./assets/animations/explosionSheet.png";
+import * as dialogue from './assets/dialogue.json';
+import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png";
+import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import tilemapCsv from "./assets/tilemaps/csv/lab1.csv";
 import defaultTileset from "./assets/tilemaps/tiles/factory64x64.png";
-import * as dialogue from './assets/dialogue.json';
-
+import { NUM_ENEMIES, TILEHEIGHT, TILEWIDTH } from './constants';
+import { getAvatarContract, getBoardContract } from './contractAbi'
+import { Enemy } from './enemy';
+import { Player } from './player';
 import { VrfProvider } from './vrfProvider';
-import { AbiCoder } from 'ethers/lib/utils';
 
-export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
-export const TILEWIDTH = 64;
-export const TILEHEIGHT = 64;
-export const NUM_ENEMIES = 3;
+export const INPUT = Object.freeze({ UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE: 5 });
+
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
 const ENEMY_SPRITE_SIZE_PX = 64;
 const WALKABLE_RANGES = [
-    [1,3], [26,28], [51, 53], [76,78], [101, 103], [126, 128], [183, 185], [189, 200]
+    [1, 3], [26, 28], [51, 53], [76, 78], [101, 103], [126, 128], [183, 185], [189, 200]
 ];
 const COLLIDING_RANGES = [
     [4, 25], [29, 50], [54, 75], [79, 100], [104, 125], [129, 182], [186, 188]
@@ -65,26 +63,26 @@ export class LabScene extends Phaser.Scene {
         this.load.image('tiles', defaultTileset);
         this.load.tilemapCSV('map', tilemapCsv);
         this.load.spritesheet('player', defaultPlayerSpritesheet, { frameWidth: TILEWIDTH, frameHeight: TILEHEIGHT });
-        for (var i = 0; i < NUM_ENEMIES; i++){
+        for (var i = 0; i < NUM_ENEMIES; i++) {
             this.load.spritesheet(
                 'enemy_' + i,
-                 defaultEnemySpritesheet,
-                 { 
+                defaultEnemySpritesheet,
+                {
                     frameWidth: ENEMY_SPRITE_SIZE_PX,
                     frameHeight: ENEMY_SPRITE_SIZE_PX,
                     startFrame: 2 * i,
-                    endFrame: 2 * i + 1 
+                    endFrame: 2 * i + 1
                 }
             );
         }
         this.load.spritesheet('damageSprites', damageSpritesheet, { frameWidth: 32, frameHeight: 32 });
     }
 
-    create () {
+    create() {
         this.pathfinder = new EasyStar.js();
 
         // LOAD MAP 
-        this.map = this.make.tilemap({ key: 'map', tileWidth: TILEWIDTH, tileHeight: TILEHEIGHT});
+        this.map = this.make.tilemap({ key: 'map', tileWidth: TILEWIDTH, tileHeight: TILEHEIGHT });
         this.tileset = this.map.addTilesetImage('tiles');
         var layer = this.map.createLayer(0, this.tileset, 0, 0);
         this.map.setCollisionBetween(COLLISION_INDEX_START, COLLISION_INDEX_END);
@@ -114,7 +112,7 @@ export class LabScene extends Phaser.Scene {
                 enemyXY[1],
                 'enemy_' + i,
                 i * 2, //frame
-                this.getEnemyConfig(), 
+                this.getEnemyConfig(),
                 new VrfProvider());
 
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
@@ -146,11 +144,11 @@ export class LabScene extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
     }
 
-    update (time, delta) {
+    update(time, delta) {
         // block until wallet is connected 
         if (this.provider == null || this.avatar == null) {
             if (this.connectWalletPrompt == null) {
-                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", {fontSize: '20px'});
+                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", { fontSize: '20px' });
             }
             // check via the scene manager if the user has connected to the wallet scene
             var walletScene = this.scene.manager.getScene('wallet');
@@ -166,7 +164,7 @@ export class LabScene extends Phaser.Scene {
             this.connectWalletPrompt.destroy();
             this.connectWalletPrompt = null;
         }
-        
+
         // UPDATE STATE FROM ON CHAIN
         var avatarId = this.avatar[0].id;
         this.player.initStatsFromChain(this.avatar[0]);
@@ -206,10 +204,10 @@ export class LabScene extends Phaser.Scene {
                     else if (this.cursors.down.isDown) {
                         input = INPUT.DOWN;
                     }
-                    else if (this.cursors.space.isDown){
+                    else if (this.cursors.space.isDown) {
                         input = INPUT.SPACE;
                     }
-                    
+
                     this.lastInputTime = time;
                     playerInputAccepted = true;
                 }
@@ -232,27 +230,27 @@ export class LabScene extends Phaser.Scene {
         if (allDead) {
             this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
         }
-        
+
         this.keyPressedLastTick = anyKeyPressed;
     }
 
     /////////////////////////////////////////////
 
-    anyCursorDown () {
+    anyCursorDown() {
         return this.cursors.left.isDown || this.cursors.right.isDown || this.cursors.up.isDown || this.cursors.down.isDown || this.cursors.space.isDown;
     }
 
     getEnemySpawnPosition(enemyIndex) {
         if (enemyIndex == 0) {
-            return [7,4];
+            return [7, 4];
         }
         if (enemyIndex == 1) {
-            return [15,1];
+            return [15, 1];
         }
         if (enemyIndex == 2) {
-            return [20,10];
+            return [20, 10];
         }
-        return [-1,-1];
+        return [-1, -1];
     }
 
     //////////// TILING & NAVIGATION //////////////////
@@ -262,7 +260,7 @@ export class LabScene extends Phaser.Scene {
     }
 
     // checks if a tile at coordinate x,y has collision enabled
-    doesTileCollide(x,y) {
+    doesTileCollide(x, y) {
         var nextTile = this.map.getTileAt(x, y);
         return nextTile == null || this.doesTileIDCollide(nextTile.index);
     }
@@ -271,15 +269,14 @@ export class LabScene extends Phaser.Scene {
         return this.map.tilesets[0].tileProperties.hasOwnProperty(index + 1);
     }
 
-    buildPathfindingGrid()
-    {
+    buildPathfindingGrid() {
         var grid = [];
-        for(var y = 0; y < this.map.height; y++){
+        for (var y = 0; y < this.map.height; y++) {
             var col = [];
-            for(var x = 0; x < this.map.width; x++){
+            for (var x = 0; x < this.map.width; x++) {
                 // In each cell we store the ID of the tile, which corresponds
                 // to its index in the tileset of the map ("ID" field in Tiled)
-                col.push(this.getTileID(x,y));
+                col.push(this.getTileID(x, y));
             }
             grid.push(col);
         }
@@ -293,17 +290,17 @@ export class LabScene extends Phaser.Scene {
 
         // iterate manually set ranges for collision
         COLLIDING_RANGES.forEach(range => {
-           for(var i = range[0]; i <= range[1]; i++) {
-               properties[i] = new Object();
-               properties[i]['collide'] = true;
-           } 
+            for (var i = range[0]; i <= range[1]; i++) {
+                properties[i] = new Object();
+                properties[i]['collide'] = true;
+            }
         });
 
-        for (var i = tileset.firstgid; i < tileset.total; i++){ // firstgid and total are fields from Tiled that indicate the range of IDs that the tiles can take in that tileset
+        for (var i = tileset.firstgid; i < tileset.total; i++) { // firstgid and total are fields from Tiled that indicate the range of IDs that the tiles can take in that tileset
             if (!properties.hasOwnProperty(i + 1)) acceptableTiles.push(i);
         }
         this.pathfinder.setAcceptableTiles(acceptableTiles);
-    } 
+    }
 
     //////////ON-CHAIN INTERACTIONS////////////
 
@@ -326,11 +323,10 @@ export class LabScene extends Phaser.Scene {
 
     //////////DEBUG///////////////
 
-    drawDebug () {
+    drawDebug() {
         this.debugGraphics.clear();
 
-        if (this.showDebug)
-        {
+        if (this.showDebug) {
             // Pass in null for any of the style options to disable drawing that component
             this.map.renderDebug(this.debugGraphics, {
                 tileColor: null, // Non-colliding tiles
@@ -342,7 +338,7 @@ export class LabScene extends Phaser.Scene {
         this.helpText.setText(this.getHelpMessage());
     }
 
-    getHelpMessage () {
+    getHelpMessage() {
         return 'Arrow keys to move.' +
             '\nPress "C" to toggle debug visuals: ' + (this.showDebug ? 'on' : 'off');
     }

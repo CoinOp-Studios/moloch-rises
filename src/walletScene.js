@@ -4,17 +4,18 @@ import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
 import scientist_game from './assets/sprites/scientist_game.png';
+import { VIEWPORT_WIDTH } from './constants';
 import { getOwnedAvatars, mintAvatar } from './contractAbi';
 import { connect } from './wallet';
 
-const PLAYER_COLOR = ['pink', 'blue', 'gold'][Math.floor(Math.random() * 3)];
-
 const BUTTON_FRAMES = {
-    INACTIVE: `tiles/buttons/help-${PLAYER_COLOR}`,
-    INVALID: 'tiles/buttons/help-gray',
-    CONNECTING: `tiles/buttons/info-${PLAYER_COLOR}`,
-    CONNECTED: `tiles/buttons/tick-${PLAYER_COLOR}`,
+    INACTIVE: 'tiles/icons/target-yellow',
+    CONNECTING: 'tiles/icons/lightning-yellow',
+    CONNECTED: 'tiles/icons/horns-yellow',
+    PLAYER_INACTIVE: 'tiles/icons/meeple-gray',
 };
+
+const BAR_SCALE = 0.8;
 
 console.log(`BUTTON_FRAMES: ${JSON.stringify(BUTTON_FRAMES)}`);
 
@@ -32,12 +33,10 @@ const makeAvatarChoice = (avatar, index, key, callback) => {
 }
 
 export class WalletScene extends Phaser.Scene {
+    emitters = {};
     sprites = {};
-    spriteFrames = { 'wallet': BUTTON_FRAMES.INVALID, 'playerButton': BUTTON_FRAMES.INACTIVE };
     provider = null;
     account = '';
-    walletButtonEmitter = null;
-    playerButtonEmitter = null;
     avatars = [];
     currentAvatar = null;
     avatarButtonImage = null;
@@ -54,48 +53,62 @@ export class WalletScene extends Phaser.Scene {
         this.load.multiatlas('ui', 'assets/moloch.json', 'assets');
     }
 
-    create() {
-        const { width, height } = this.scale;
-        console.log('width', width, 'height', height);
-        const walletConnectButton = this.add.sprite(width - 50, 50, 'ui', BUTTON_FRAMES.INACTIVE);
-        walletConnectButton.setScale(0.5);
-        this.sprites.wallet = walletConnectButton;
-        this.makeWalletButtonInteractive(walletConnectButton);
 
-        const playerButton = this.add.sprite(width - 150, 50, 'ui', BUTTON_FRAMES.INVALID);
+    create() {
+        const topHUD = this.add.sprite(0, 0, 'ui', 'tiles/frame/Top');
+        topHUD.setPosition((VIEWPORT_WIDTH - topHUD.width) / 2, 0);
+        const healthBar = this.add.sprite(25, 0, 'ui', 'tiles/hud/section-left-health');
+        healthBar.setScale(BAR_SCALE);
+        const energyBar = this.add.sprite(VIEWPORT_WIDTH - 200, 0, 'ui', 'tiles/hud/section-right-energy');
+        energyBar.setScale(BAR_SCALE);
+        energyBar.setPosition(VIEWPORT_WIDTH - (energyBar.width * BAR_SCALE) - 25, 0);
+        const walletX = VIEWPORT_WIDTH / 3 * 1.91;
+        const wallet = this.add.sprite(walletX, 8, 'ui', BUTTON_FRAMES.INACTIVE);
+        wallet.setScale(0.6);
+        const playerX = VIEWPORT_WIDTH / 3 * 1.05;
+        const playerButton = this.add.sprite(playerX, 8, 'ui', BUTTON_FRAMES.PLAYER_INACTIVE);
         playerButton.setScale(0.5);
-        this.sprites.playerButton = playerButton;
+
+        this.sprites = {
+            energyBar,
+            healthBar,
+            playerButton,
+            topHUD,
+            wallet,
+        };
 
         const particles = this.add.particles('flares');
-        this.walletButtonEmitter = particles.createEmitter({
-            frame: { frames: ['red', 'yellow'], cycle: true },
-            x: width - 50,
-            y: 50,
-            blendMode: 'ADD',
-            scale: { start: 0.15, end: 0.1 },
-            speed: { min: -100, max: 100 },
-            emitZone: {
-                source: new Phaser.Geom.Circle(0, 0, 38),
-                type: 'edge',
-                quantity: 64,
-                yoyo: false,
-            }
-        });
-        this.playerButtonEmitter = particles.createEmitter({
-            active: false,
-            frame: { frames: ['red', 'yellow'], cycle: true },
-            x: width - 150,
-            y: 50,
-            blendMode: 'ADD',
-            scale: { start: 0.15, end: 0.1 },
-            speed: { min: -100, max: 100 },
-            emitZone: {
-                source: new Phaser.Geom.Circle(0, 0, 38),
-                type: 'edge',
-                quantity: 64,
-                yoyo: false,
-            },
-        });
+        this.emitters = {
+            wallet: particles.createEmitter({
+                frame: { frames: ['red', 'yellow'], cycle: true },
+                x: walletX + 10,
+                y: 10,
+                blendMode: 'ADD',
+                scale: { start: 0.15, end: 0.1 },
+                speed: { min: -100, max: 100 },
+                emitZone: {
+                    source: new Phaser.Geom.Circle(0, 0, 10),
+                    type: 'edge',
+                    quantity: 2,
+                    yoyo: false,
+                }
+            }),
+            player: particles.createEmitter({
+                active: false,
+                frame: { frames: ['red', 'yellow'], cycle: true },
+                x: playerX + 10,
+                y: 10,
+                blendMode: 'ADD',
+                scale: { start: 0.15, end: 0.1 },
+                speed: { min: -100, max: 100 },
+                emitZone: {
+                    source: new Phaser.Geom.Circle(0, 0, 10),
+                    type: 'edge',
+                    quantity: 64,
+                    yoyo: false,
+                },
+            }),
+        };
 
         document.getElementById('avatar-select-close').addEventListener('click', () => {
             this.hideAvatarSelect();
@@ -104,6 +117,22 @@ export class WalletScene extends Phaser.Scene {
         document.getElementById('avatar-mint').addEventListener('click', () => {
             this.mintAvatarForUser();
         });
+
+        this.makeWalletButtonInteractive();
+    }
+
+    destroyTooltip() {
+        const { sprites: { tooltip, tooltiptext } } = this;
+
+        if (tooltip) {
+            tooltip.destroy();
+            delete this.sprites.tooltip;
+        }
+
+        if (tooltiptext) {
+            tooltiptext.destroy();
+            delete this.sprites.tooltiptext;
+        }
     }
 
     toggleAvatarSelect(state) {
@@ -119,7 +148,8 @@ export class WalletScene extends Phaser.Scene {
         });
     }
 
-    makePlayerButtonInteractive(button) {
+    makePlayerButtonInteractive() {
+        const button = this.sprites.playerButton;
         const hitArea = new Phaser.Geom.Circle(50, 50, 100);
         button.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
         button.on('pointerover', this.onPlayerOver, this);
@@ -128,7 +158,8 @@ export class WalletScene extends Phaser.Scene {
         console.log('make player button interactive', button);
     }
 
-    makeWalletButtonInteractive(wallet) {
+    makeWalletButtonInteractive() {
+        const { wallet } = this.sprites;
         const hitArea = new Phaser.Geom.Circle(50, 50, 100);
         wallet.setInteractive(hitArea, Phaser.Geom.Circle.Contains);
         wallet.on('pointerover', this.onOver, this);
@@ -137,30 +168,30 @@ export class WalletScene extends Phaser.Scene {
     }
 
     async onClick(button) {
+        this.destroyTooltip();
         if (this.connected) {
             console.log('disconnected');
-            this.spriteFrames.wallet = BUTTON_FRAMES.INACTIVE;
-            this.setSpriteFrame('wallet', false);
+            this.sprites.wallet.setFrame(BUTTON_FRAMES.INACTIVE);
             this.connected = false;
             this.provider.disconnect();
-            this.walletButtonEmitter.start();
+            this.emitters.wallet.start();
             return;
         }
         console.log('connecting', button);
         this.sprites.wallet.removeInteractive();
-        this.spriteFrames.wallet = BUTTON_FRAMES.CONNECTING;
-        this.setSpriteFrame('wallet', false);
+        this.sprites.wallet.setFrame(BUTTON_FRAMES.CONNECTING);
         const provider = await connect();
+        console.log('connected');
         this.updateConnectionStatus(provider);
-        this.setSpriteFrame('wallet', false);
-        this.walletButtonEmitter.explode();
+        this.emitters.wallet.stop();
+
         this.makeWalletButtonInteractive(this.sprites.wallet);
     }
 
     onPlayerClick(button) {
-        console.log('click player', button);
         const that = this;
-        this.playerButtonEmitter.explode();
+        this.emitters.player.stop();
+        this.destroyTooltip();
         if (this.currentAvatar) {
             this.currentAvatar = null;
             this.updateConnectionStatus(this.provider);
@@ -169,40 +200,56 @@ export class WalletScene extends Phaser.Scene {
         this.toggleAvatarSelect(true);
     }
 
-    onOver(button) {
-        this.setSpriteFrame('wallet', true);
-        console.log('over', button);
+    onOver() {
+        if (!this.connected) {
+            this.sprites.tooltip = this.add.sprite(-1000, -1000, 'ui', 'tiles/tooltip/top-right-gold');
+            const { wallet, tooltip } = this.sprites;
+            const tX = wallet.x - tooltip.width / 3;
+            const tY = wallet.y + tooltip.height;
+            this.sprites.tooltip.setPosition(tX, tY);
+            this.sprites.tooltiptext = this.add.text(
+                wallet.x - tooltip.width / 3 * 2,
+                tY,
+                'Connect to wallet',
+                { fontSize: '12px', fill: '#fff', fontFamily: 'Consolas' }
+            );
+        }
     }
 
     onPlayerOver(button) {
-        this.setSpriteFrame('playerButton', true);
-        console.log('over player', button);
+        if (this.connected && !this.currentAvatar) {
+            this.sprites.tooltip = this.add.sprite(-1000, -1000, 'ui', 'tiles/tooltip/top-left-gold');
+            const { playerButton, tooltip } = this.sprites;
+            const tX = playerButton.x + tooltip.width / 3 * 1.25;
+            const tY = playerButton.y + tooltip.height;
+            this.sprites.tooltip.setPosition(tX, tY);
+            this.sprites.tooltiptext = this.add.text(
+                playerButton.x,
+                tY,
+                'Select avatar',
+                { fontSize: '12px', fill: '#fff', fontFamily: 'Consolas' }
+            );
+        }
     }
 
     onOut(button) {
-        this.setSpriteFrame('wallet', false);
-        console.log('out', button);
+        // console.log('out', button);
+        this.destroyTooltip();
     }
 
     onPlayerOut(button) {
-        this.setSpriteFrame('playerButton', true);
-        console.log('out player', button);
+        this.destroyTooltip();
     }
 
-    setSpriteFrame(key, hover) {
-        const index = this.spriteFrames[key] + (hover ? 1 : 0);
-        this.sprites[key].setFrame(index);
-    }
-
-    updateConnectionStatus(provider) {
-        console.log('connected', provider);
+    updateConnectionStatus(prov) {
+        const provider = prov || this.provider;
         if (!provider) {
             this.connected = false;
-            this.spriteFrames.wallet = BUTTON_FRAMES.INACTIVE;
+            this.sprites.wallet.setFrame(BUTTON_FRAMES.INACTIVE);
             return false;
         }
-
-        this.spriteFrames.wallet = BUTTON_FRAMES.CONNECTED;
+        console.log('connected', provider);
+        this.sprites.wallet.setFrame(BUTTON_FRAMES.CONNECTED);
         this.connected = true;
         this.provider = provider;
         this.makePlayerButtonInteractive(this.sprites.playerButton);
@@ -216,12 +263,11 @@ export class WalletScene extends Phaser.Scene {
                 this.updateOwnedAvatars(provider, account);
             }
             if (this.currentAvatar) {
-                this.spriteFrames.playerButton = BUTTON_FRAMES.CONNECTED;
+                this.sprites.playerButton.setFrame(BUTTON_FRAMES.CONNECTED);
             } else {
-                this.spriteFrames.playerButton = BUTTON_FRAMES.CONNECTING;
-                this.playerButtonEmitter.active = true;
+                this.sprites.playerButton.setFrame(BUTTON_FRAMES.CONNECTING);
+                this.emitters.player.active = true;
             }
-            this.setSpriteFrame('playerButton', false);
         });
         //this.gameScene.provider = provider;
         return true;
@@ -229,10 +275,10 @@ export class WalletScene extends Phaser.Scene {
 
     setAvatar(avatar, index) {
         console.log('Avatar selected', avatar, index);
-        const { width } = this.scale;
+        const { VIEWPORT_WIDTH } = this.scale;
         this.currentAvatar = [avatar, index];
         this.toggleAvatarSelect(false);
-        this.avatarButtonImage = this.add.image(width - 150, 50, 'scientist');
+        this.avatarButtonImage = this.add.image(VIEWPORT_WIDTH - 150, 50, 'scientist');
         this.updateConnectionStatus();
     }
 
