@@ -249,6 +249,7 @@ export class LabScene extends Phaser.Scene {
         this.turnsRemainingText.setAlpha(1);
         if (this.gameMode == GAME_MODE.OFFLINE || this.currentGame != null) {
             console.log("offline mode enabled or game is in progress");
+            this.vrfProvider.setSeed(this.getOfflineBoard.maxTurns);
             return; 
         }
         
