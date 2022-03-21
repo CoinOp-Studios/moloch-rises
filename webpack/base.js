@@ -25,7 +25,7 @@ module.exports = {
         use: "file-loader"
       },
       {
-        test: __dirname + "/src/assets/moloch.json",
+        test: __dirname + "/assets/moloch.json",
         use: "file-loader"
       },
       {
