@@ -32,26 +32,41 @@ const PATHFINDER_ITERATIONS = 1000;
 export class LabScene extends Phaser.Scene {
     constructor(config) {
         super(config);
-        this.pathfinder = null;
+
+        // map
         this.map = null;
         this.tileset = null;
+
+        // ai
+        this.pathfinder = null;
+
+        // UI / UX elements
         this.debugGraphics = null;
         this.helpText = null;
-        this.player = null;
         this.showDebug = false;
+        this.modeSelectPrompt = null;
+
+        // game lifecycle
+        this.gameMode = 0;
+        this.turnsRemaining = -1;
+
+        // input
         this.cursors = null;
         this.lastInputTime = 0;
         this.lastInput = 0;
         this.minInputDelayMs = 50;
+
+        // on-chain state
         this.avatar = null;
         this.board = null;
+        this.currentGame = null;
 
         // web3 provider
-        this.modeSelectPrompt = null;
         this.provider = null;
 
         // game objects with collision which need to
         // check for one another
+        this.player = null;
         this.collidingGameObjects = [];
         this.enemies = [];
 
