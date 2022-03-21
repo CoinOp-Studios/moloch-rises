@@ -25,10 +25,6 @@ module.exports = {
         use: "file-loader"
       },
       {
-        test: __dirname + "/assets/moloch.json",
-        use: "file-loader"
-      },
-      {
         test: /\.css$/,
         use: [
           "style-loader",
