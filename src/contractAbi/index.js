@@ -5,7 +5,7 @@ import { AVATAR_CONTRACTS, BOARD_CONTRACTS } from "../config";
 import { avatar } from './avatar';
 import { board } from './board';
 import { getTokens } from './queries';
-import { Constants } from "../constants";
+import { BLOCK_CONFIRMS } from "../constants";
 
 export async function getAvatarContract(provider) {
   const network = await provider.getNetwork();
@@ -62,7 +62,7 @@ export async function startBoard(provider, boardContract, avatarId) {
     const tx = await boardContract.connect(signer).start(avatarId, {
         value: gwei
     });
-    var rc = await tx.wait(Constants.BLOCK_CONFIRMS);
+    var rc = await tx.wait(BLOCK_CONFIRMS);
     console.log("game started on-chain for avatar %d in tx ", avatarId, rc);
       
     // retrieve game data for this avatar
@@ -86,7 +86,7 @@ export async function completeBoard(provider, boardContract, gameId, gameData) {
   if(!waitingForCompleteBoard) {
     waitingForCompleteBoard = true;
     var tx = await boardContract.connect(signer).complete(gameId, gameData);
-    var rc = await tx.wait(Constants.BLOCK_CONFIRMS);
+    var rc = await tx.wait(BLOCK_CONFIRMS);
     console.log("game completed on-chain for game %d, info %s, in rc %s", gameId, gameData, rc);
     waitingForCompleteBoard = false;
   }
