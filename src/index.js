@@ -3,7 +3,8 @@ import './main.css';
 
 import Phaser from 'phaser';
 
-import { LabScene, TILEHEIGHT, TILEWIDTH } from './labScene';
+import { VIEWPORT_HEIGHT, VIEWPORT_WIDTH } from './constants';
+import { LabScene } from './labScene';
 import { WalletScene } from './walletScene';
 
 class GameWrapper extends Phaser.Scene {
@@ -19,8 +20,8 @@ class GameWrapper extends Phaser.Scene {
 
 const wrapperConfig = {
     type: Phaser.AUTO,
-    width: TILEWIDTH * 22, 
-    height: TILEHEIGHT * 12, 
+    width: VIEWPORT_WIDTH,
+    height: VIEWPORT_HEIGHT,
     backgroundColor: '#2d2d2d',
     parent: 'game',
     pixelArt: true,
