@@ -5,7 +5,7 @@ import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
 import scientist_game from './assets/sprites/scientist_game.png';
-import { getOwnedAvatars, mintAvatar } from './contractAbi';
+import { getOwnedAvatars, mintAvatar, getBoardContract } from './contractAbi';
 import { connect, web3Modal } from './wallet';
 
 const BUTTON_FRAMES = {
@@ -36,6 +36,7 @@ export class WalletScene extends Phaser.Scene {
     playerButtonEmitter = null;
     avatars = [];
     currentAvatar = null;
+    boardContract = null;
     avatarButtonImage = null;
     gameScene = null;
 
@@ -249,6 +250,18 @@ export class WalletScene extends Phaser.Scene {
         this.spriteFrames.wallet = BUTTON_FRAMES.CONNECTED;
         this.connected = true;
         this.provider = provider;
+
+        // attempt to retrieve board state as soon as wallet is 
+        // successfully connected
+        if (this.boardContract == null && !this.retrievingBoardState) {
+            this.retrievingBoardState = true;
+            getBoardContract(this.provider).then(b => {
+                console.log('retrieved board contract');
+                this.boardContract = b;
+                this.retrievingBoardState = false;
+            });
+        }
+        
         this.makePlayerButtonInteractive(this.sprites.playerButton);
         provider.listAccounts().then((accounts) => {
             if (!accounts) {
