@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import EasyStar from 'easystarjs';
 import { Player } from './player';
 import { Enemy } from './enemy';
-import { getBoardContract, getAvatarContract } from './contractAbi'
+import { getBoardContract, getAvatarContract, startBoard, completeBoard } from './contractAbi';
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png";
@@ -13,11 +13,13 @@ import * as dialogue from './assets/dialogue.json';
 
 import { VrfProvider } from './vrfProvider';
 import { AbiCoder } from 'ethers/lib/utils';
+import { Constants } from './constants';
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
 export const TILEWIDTH = 64;
 export const TILEHEIGHT = 64;
 export const NUM_ENEMIES = 3;
+const GAME_MODE = Object.freeze({ OFFLINE: 1, ONLINE:2 });
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
 const ENEMY_SPRITE_SIZE_PX = 64;
@@ -109,7 +111,7 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.enableSync();
         // we recalculate every turn... keeping this low for now
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
-        var vrfProvider = new VrfProvider();
+        this.vrfProvider = new VrfProvider();
 
         // SPAWN SPRITES
         this.player = new Player(
@@ -119,7 +121,7 @@ export class LabScene extends Phaser.Scene {
             'player',
             0, // frame
             this.getPlayerConfig(),
-            vrfProvider);
+            this.vrfProvider);
         this.collidingGameObjects.push(this.player);
 
         for (var i = 0; i < NUM_ENEMIES; i++) {
@@ -131,12 +133,11 @@ export class LabScene extends Phaser.Scene {
                 'enemy_' + i,
                 i * 2, //frame
                 this.getEnemyConfig(), 
-                vrfProvider);
+                this.vrfProvider);
 
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
             enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
             this.enemies.push(enemy);
-            enemy.initStatsFromChain();
             this.collidingGameObjects.push(enemy);
         }
 
@@ -172,9 +173,9 @@ export class LabScene extends Phaser.Scene {
 
     update (time, delta) {
         // block until either:
-        //      wallet is connected  & avatar selected
-        // OR   opted-out of wallet, default avatar used 
-        if (!this.getGameModeAndAvatar()) {
+        //      wallet is connected & on-chain state retrieved <---- ONLINE mode
+        // OR   opted-out of wallet, default offline state used <---- OFFLINE mode
+        if (!this.initGameState()) {
             if (this.modeSelectPrompt == null) {
                 this.modeSelectPrompt = this.add.text(16, 100, "please play offline, or connect a wallet & avatar to continue!", {fontSize: '20px'});
             }
@@ -185,31 +186,87 @@ export class LabScene extends Phaser.Scene {
             this.modeSelectPrompt.destroy();
             this.modeSelectPrompt = null;
         }
-        
-        // UPDATE STATE FROM ON CHAIN
-        var avatarId = this.avatar[0].id;
-        this.player.initStatsFromAvatar(this.avatar[0]);
-
-        /*
-        getBoardContract(this.provider).then(b => {
-            this.board = b;
-        });
-        if (this.board == null) {
+ 
+        if (!this.hasGameStarted()){
             return;
-        }*/
+        }
 
-        /*
-            Game connection logic
+        if (!this.gameStarted) {
+            this.startGame();
+            this.gameStarted = true;
+        }
+ 
+        var input;
+        if (!this.gameOver) {
+            input = this.getInput(time);
+        }
+        
+        // update sprites
+        this.player.update(input, this);
 
-            Check if the selected avatar currently has an ongoing game
+        if (input != null) {
+            this.decrementTurnsRemaining();
+        }
 
-        */ 
+        // update enemies 
+        var allEnemiesDead = true;
+        this.enemies.forEach(enemy => {
+            enemy.update(input != null);
+            allEnemiesDead = allEnemiesDead && enemy.isDead();
+        });
 
+        this.endGameIfOver(allEnemiesDead);
+    }
+
+    // TODO: add menu or visual prompt before sending a txn using user's wallet
+    hasGameStarted() {
+        if (this.gameMode == GAME_MODE.OFFLINE) {
+            // no extra interaction necessary if wallet isn't connected
+            return true;
+        }
+        if (this.gameMode == GAME_MODE.ONLINE) {
+            // send prompt to user
+
+            // wait for user to affirm prompt 
+            return true;
+        }
+
+        return false;
+    }
+
+    decrementTurnsRemaining() {
+        this.turnsRemaining--;
+        this.turnsRemainingText.setText(Constants.TURNS_REMAINING_TEXT + " " + this.turnsRemaining);
+        this.turnsRemainingText.updateText();
+    }
+
+    haveMaxTurnsElapsed() {
+        return this.turnsRemaining <= 0;
+    }
+
+    startGame() {
+        this.turnsRemainingText.setText(Constants.TURNS_REMAINING_TEXT + " " + this.turnsRemaining);
+        this.turnsRemainingText.setAlpha(1);
+        if (this.gameMode == GAME_MODE.OFFLINE || this.currentGame != null) {
+            console.log("offline mode enabled or game is in progress");
+            return; 
+        }
+        
+        console.log("starting game on-chain");
+        startBoard(this.provider, this.board, this.avatar[0].id).then((gameId, gameData) => {
+            console.log("retrieved on-chain gameId: %s and gameData ", gameId, gameData);
+            [this.gameId, this.gameData] = [gameId, gameData];
+            // TODO: get the seed from character sheet
+            this.vrfProvider.setSeed(this.gameData.seed);
+        });
+
+    }
+
+    getInput(time) {
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
-        var anyKeyPressed = this.anyCursorDown();
+        const anyKeyPressed = this.anyCursorDown();
         var input = null;
-        var playerInputAccepted = false;
         // accept new input if we're x ms ahead of the last input and the player isn't holding a key down
         if (this.lastInputTime + this.minInputDelayMs < time) {
             if (anyKeyPressed) {
@@ -231,29 +288,84 @@ export class LabScene extends Phaser.Scene {
                     }
                     
                     this.lastInputTime = time;
-                    playerInputAccepted = true;
                 }
                 // will need this if we want to animate each turn
                 // for now, things will just "teleport" to their next tile
                 //this.lastInput = input;
             }
         }
-
-        // update sprites
-        this.player.update(input, this);
-
-        // update enemies 
-        var allDead = true;
-        this.enemies.forEach(enemy => {
-            enemy.update(playerInputAccepted);
-            allDead = allDead && enemy.isDead();
-        });
-
-        if (allDead) {
-            this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
-        }
-        
         this.keyPressedLastTick = anyKeyPressed;
+        return input;
+    }
+
+    endGame() {
+        console.log("ending game on-chain");
+        if (this.gameMode == GAME_MODE.OFFLINE)
+            return; 
+
+        completeBoard(this.provider, this.board, this.gameId, this.gameData);
+    }
+
+    endGameIfOver(allEnemiesDead) {
+        var terminal = false;
+        var victory = false;
+
+        if (allEnemiesDead) {
+            terminal = true;
+            victory = true;
+        }
+        else if (this.player.isDead()) {
+            // animation
+            terminal = true;
+        }
+        else if (this.haveMaxTurnsElapsed()) {
+            // animation
+            terminal = true;
+        }
+
+        if (!terminal || this.gameOver)
+            return false;
+        
+        this.gameOver = true;
+        
+        if (this.gameMode == GAME_MODE.OFFLINE) {
+            if (victory) {
+                this.animateVictory();
+                // dispaly a "here's what you *would* win prompt"
+            } else {
+                this.animateDefeat(this.haveMaxTurnsElapsed());
+            }
+        }
+        if (this.gameMode == GAME_MODE.ONLINE) {
+            this.gameData.completed = true;
+            if (victory) {
+                this.gameData.victory = true;
+                // submit result + end game
+
+                // claim NFT
+
+                // submit ZK history
+            } else {
+                // update game state
+                this.gameData.victory = false;
+                this.gameData.resign = this.haveMaxTurnsElapsed();
+                this.animateDefeat(this.haveMaxTurnsElapsed());
+
+                // animate damage to equipped loot
+                this.animateLootdamage();
+            }
+        }
+
+        return true;
+    }
+
+    resetGame() {
+        this.gameMode = 0;
+        this.currentGame = null;
+        this.gameOver = false;
+        this.gameStarted = false;
+        // TODO: recreate the scene
+        this.scene.restart();
     }
 
     /////////////////////////////////////////////
@@ -405,6 +517,13 @@ export class LabScene extends Phaser.Scene {
         };
     }
 
+    animateVictory() {
+        this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
+    }
+
+    animateDefeat(turnsElapsed) {
+
+    }
     //////////DEBUG///////////////
 
     drawDebug () {
