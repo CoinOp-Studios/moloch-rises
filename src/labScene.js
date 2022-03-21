@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import EasyStar from 'easystarjs';
 import { Player } from './player';
 import { Enemy } from './enemy';
-import { getBoardContract, getAvatarContract } from './contractAbi'
+import { getBoardContract, getAvatarContract, startBoard, completeBoard } from './contractAbi';
 
 import defaultPlayerSpritesheet from "./assets/sprites/scientist_game.png";
 import defaultEnemySpritesheet from "./assets/sprites/droids_sprite_64x64.png";
@@ -13,11 +13,13 @@ import * as dialogue from './assets/dialogue.json';
 
 import { VrfProvider } from './vrfProvider';
 import { AbiCoder } from 'ethers/lib/utils';
+import { Constants } from './constants';
 
 export const INPUT = Object.freeze({UP: 1, RIGHT: 2, DOWN: 3, LEFT: 4, SPACE : 5});
 export const TILEWIDTH = 64;
 export const TILEHEIGHT = 64;
 export const NUM_ENEMIES = 3;
+const GAME_MODE = Object.freeze({ OFFLINE: 1, ONLINE:2 });
 const COLLISION_INDEX_START = 54;
 const COLLISION_INDEX_END = 83;
 const ENEMY_SPRITE_SIZE_PX = 64;
@@ -32,26 +34,41 @@ const PATHFINDER_ITERATIONS = 1000;
 export class LabScene extends Phaser.Scene {
     constructor(config) {
         super(config);
-        this.pathfinder = null;
+
+        // map
         this.map = null;
         this.tileset = null;
+
+        // ai
+        this.pathfinder = null;
+
+        // UI / UX elements
         this.debugGraphics = null;
         this.helpText = null;
-        this.player = null;
         this.showDebug = false;
+        this.modeSelectPrompt = null;
+
+        // game lifecycle
+        this.gameMode = 0;
+        this.turnsRemaining = -1;
+
+        // input
         this.cursors = null;
         this.lastInputTime = 0;
         this.lastInput = 0;
         this.minInputDelayMs = 50;
+
+        // on-chain state
         this.avatar = null;
         this.board = null;
+        this.currentGame = null;
 
         // web3 provider
-        this.connectWalletPrompt = null;
         this.provider = null;
 
         // game objects with collision which need to
         // check for one another
+        this.player = null;
         this.collidingGameObjects = [];
         this.enemies = [];
 
@@ -94,6 +111,7 @@ export class LabScene extends Phaser.Scene {
         this.pathfinder.enableSync();
         // we recalculate every turn... keeping this low for now
         this.pathfinder.setIterationsPerCalculation(PATHFINDER_ITERATIONS);
+        this.vrfProvider = new VrfProvider();
 
         // SPAWN SPRITES
         this.player = new Player(
@@ -103,7 +121,7 @@ export class LabScene extends Phaser.Scene {
             'player',
             0, // frame
             this.getPlayerConfig(),
-            new VrfProvider());
+            this.vrfProvider);
         this.collidingGameObjects.push(this.player);
 
         for (var i = 0; i < NUM_ENEMIES; i++) {
@@ -115,12 +133,11 @@ export class LabScene extends Phaser.Scene {
                 'enemy_' + i,
                 i * 2, //frame
                 this.getEnemyConfig(), 
-                new VrfProvider());
+                this.vrfProvider);
 
             enemy.scaleX = TILEWIDTH / ENEMY_SPRITE_SIZE_PX;
             enemy.scaleY = TILEHEIGHT / ENEMY_SPRITE_SIZE_PX;
             this.enemies.push(enemy);
-            enemy.initStatsFromChain();
             this.collidingGameObjects.push(enemy);
         }
 
@@ -143,53 +160,114 @@ export class LabScene extends Phaser.Scene {
         // CONFIGURE CAMERA
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
+        // INIT INPUT
         this.cursors = this.input.keyboard.createCursorKeys();
+
+        // INIT UI / UX
+        this.turnsRemainingText = this.add.text(16, 50, "TURNS REMAINING:", {
+            fontSize: Constants.TURNS_REMAINING_FONT_SIZE_STRING,
+            fontFamily: Constants.TURNS_REMAINING_FONT_FAMILY
+        });
+        this.turnsRemainingText.setAlpha(0);
     }
 
     update (time, delta) {
-        // block until wallet is connected 
-        if (this.provider == null || this.avatar == null) {
-            if (this.connectWalletPrompt == null) {
-                this.connectWalletPrompt = this.add.text(16, 100, "please connect a wallet & avatar to continue!", {fontSize: '20px'});
+        // block until either:
+        //      wallet is connected & on-chain state retrieved <---- ONLINE mode
+        // OR   opted-out of wallet, default offline state used <---- OFFLINE mode
+        if (!this.initGameState()) {
+            if (this.modeSelectPrompt == null) {
+                this.modeSelectPrompt = this.add.text(16, 100, "please play offline, or connect a wallet & avatar to continue!", {fontSize: '20px'});
             }
-            // check via the scene manager if the user has connected to the wallet scene
-            var walletScene = this.scene.manager.getScene('wallet');
-            this.provider = walletScene.provider;
-            this.avatar = walletScene.currentAvatar;
-
-            // spin until the user connects a wallet
-
             return;
         }
 
-        if (this.connectWalletPrompt != null) {
-            this.connectWalletPrompt.destroy();
-            this.connectWalletPrompt = null;
+        if (this.modeSelectPrompt != null) {
+            this.modeSelectPrompt.destroy();
+            this.modeSelectPrompt = null;
+        }
+ 
+        if (!this.hasGameStarted()){
+            return;
+        }
+
+        if (!this.gameStarted) {
+            this.startGame();
+            this.gameStarted = true;
+        }
+ 
+        var input;
+        if (!this.gameOver) {
+            input = this.getInput(time);
         }
         
-        // UPDATE STATE FROM ON CHAIN
-        var avatarId = this.avatar[0].id;
-        this.player.initStatsFromChain(this.avatar[0]);
+        // update sprites
+        this.player.update(input, this);
 
-        /*
-        getBoardContract(this.provider).then(b => {
-            this.board = b;
+        if (input != null) {
+            this.decrementTurnsRemaining();
+        }
+
+        // update enemies 
+        var allEnemiesDead = true;
+        this.enemies.forEach(enemy => {
+            enemy.update(input != null);
+            allEnemiesDead = allEnemiesDead && enemy.isDead();
         });
-        if (this.board == null) {
-            return;
+
+        this.endGameIfOver(allEnemiesDead);
+    }
+
+    // TODO: add menu or visual prompt before sending a txn using user's wallet
+    hasGameStarted() {
+        if (this.gameMode == GAME_MODE.OFFLINE) {
+            // no extra interaction necessary if wallet isn't connected
+            return true;
+        }
+        if (this.gameMode == GAME_MODE.ONLINE) {
+            // send prompt to user
+
+            // wait for user to affirm prompt 
+            return true;
+        }
+
+        return false;
+    }
+
+    decrementTurnsRemaining() {
+        this.turnsRemaining--;
+        this.turnsRemainingText.setText(Constants.TURNS_REMAINING_TEXT + " " + this.turnsRemaining);
+        this.turnsRemainingText.updateText();
+    }
+
+    haveMaxTurnsElapsed() {
+        return this.turnsRemaining <= 0;
+    }
+
+    startGame() {
+        this.turnsRemainingText.setText(Constants.TURNS_REMAINING_TEXT + " " + this.turnsRemaining);
+        this.turnsRemainingText.setAlpha(1);
+        if (this.gameMode == GAME_MODE.OFFLINE || this.currentGame != null) {
+            console.log("offline mode enabled or game is in progress");
+            this.vrfProvider.setSeed(this.getOfflineBoard.maxTurns);
+            return; 
         }
         
-        // start a game
-        var startResult = null;
-        this.board.start(this.avatar.id).then(g => {
+        console.log("starting game on-chain");
+        startBoard(this.provider, this.board, this.avatar[0].id).then((gameId, gameData) => {
+            console.log("retrieved on-chain gameId: %s and gameData ", gameId, gameData);
+            [this.gameId, this.gameData] = [gameId, gameData];
+            // TODO: get the seed from character sheet
+            this.vrfProvider.setSeed(this.gameData.seed);
+        });
 
-        });*/
+    }
 
+    getInput(time) {
         // game logic is tied to player input; enemies only move when player does
         // keep track of last input and last input time for this purpose
-        var anyKeyPressed = this.anyCursorDown();
+        const anyKeyPressed = this.anyCursorDown();
         var input = null;
-        var playerInputAccepted = false;
         // accept new input if we're x ms ahead of the last input and the player isn't holding a key down
         if (this.lastInputTime + this.minInputDelayMs < time) {
             if (anyKeyPressed) {
@@ -211,29 +289,84 @@ export class LabScene extends Phaser.Scene {
                     }
                     
                     this.lastInputTime = time;
-                    playerInputAccepted = true;
                 }
                 // will need this if we want to animate each turn
                 // for now, things will just "teleport" to their next tile
                 //this.lastInput = input;
             }
         }
-
-        // update sprites
-        this.player.update(input, this);
-
-        // update enemies 
-        var allDead = true;
-        this.enemies.forEach(enemy => {
-            enemy.update(playerInputAccepted);
-            allDead = allDead && enemy.isDead();
-        });
-
-        if (allDead) {
-            this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
-        }
-        
         this.keyPressedLastTick = anyKeyPressed;
+        return input;
+    }
+
+    endGame() {
+        console.log("ending game on-chain");
+        if (this.gameMode == GAME_MODE.OFFLINE)
+            return; 
+
+        completeBoard(this.provider, this.board, this.gameId, this.gameData);
+    }
+
+    endGameIfOver(allEnemiesDead) {
+        var terminal = false;
+        var victory = false;
+
+        if (allEnemiesDead) {
+            terminal = true;
+            victory = true;
+        }
+        else if (this.player.isDead()) {
+            // animation
+            terminal = true;
+        }
+        else if (this.haveMaxTurnsElapsed()) {
+            // animation
+            terminal = true;
+        }
+
+        if (!terminal || this.gameOver)
+            return false;
+        
+        this.gameOver = true;
+        
+        if (this.gameMode == GAME_MODE.OFFLINE) {
+            if (victory) {
+                this.animateVictory();
+                // dispaly a "here's what you *would* win prompt"
+            } else {
+                this.animateDefeat(this.haveMaxTurnsElapsed());
+            }
+        }
+        if (this.gameMode == GAME_MODE.ONLINE) {
+            this.gameData.completed = true;
+            if (victory) {
+                this.gameData.victory = true;
+                // submit result + end game
+
+                // claim NFT
+
+                // submit ZK history
+            } else {
+                // update game state
+                this.gameData.victory = false;
+                this.gameData.resign = this.haveMaxTurnsElapsed();
+                this.animateDefeat(this.haveMaxTurnsElapsed());
+
+                // animate damage to equipped loot
+                this.animateLootdamage();
+            }
+        }
+
+        return true;
+    }
+
+    resetGame() {
+        this.gameMode = 0;
+        this.currentGame = null;
+        this.gameOver = false;
+        this.gameStarted = false;
+        // TODO: recreate the scene
+        this.scene.restart();
     }
 
     /////////////////////////////////////////////
@@ -257,13 +390,13 @@ export class LabScene extends Phaser.Scene {
 
     //////////// TILING & NAVIGATION //////////////////
     getTileID(x, y) {
-        var tile = this.map.getTileAt(x, y);
+        const tile = this.map.getTileAt(x, y);
         return tile.index;
     }
 
     // checks if a tile at coordinate x,y has collision enabled
     doesTileCollide(x,y) {
-        var nextTile = this.map.getTileAt(x, y);
+        const nextTile = this.map.getTileAt(x, y);
         return nextTile == null || this.doesTileIDCollide(nextTile.index);
     }
 
@@ -307,8 +440,69 @@ export class LabScene extends Phaser.Scene {
 
     //////////ON-CHAIN INTERACTIONS////////////
 
-    getSeedFromBoardContact() {
+    /// returns true if:
+    ///     offline mode is selected 
+    /// OR  wallet is connected, avatar selected, board state retrieved
+    /// and false otherwise  
+    initGameState() {
+        // If the game mode has been set, then the requisited state has been
+        //  retrieved
+        if (this.gameMode == GAME_MODE.OFFLINE || this.gameMode == GAME_MODE.ONLINE)
+            return true;
 
+        var initialized = false;
+        // check via the scene manager if the user has connected to the wallet scene
+        var walletScene = this.scene.manager.getScene('wallet');
+       
+        let seed;
+        // check if the user has either opted for offline play, or connected a wallet and avatar
+        if (walletScene.provider != null && walletScene.currentAvatar != null && walletScene.boardContract != null) {
+            this.provider = walletScene.provider;
+            this.avatar = walletScene.currentAvatar;
+            this.board = walletScene.boardContract;
+            this.gameMode = GAME_MODE.ONLINE;
+            initialized = true;
+        }
+        else if (walletScene.offline) {
+            this.avatar = this.getOfflineAvatar();
+            this.board = this.getOfflineBoard();
+            this.gameMode = GAME_MODE.OFFLINE;
+            initialized = true;
+        }
+
+        if (initialized) {
+            this.initGameStateFromBoard(this.board);
+            this.player.initStatsFromAvatar(this.avatar[0]);
+        }
+
+        return initialized;
+    }
+
+    initGameStateFromBoard(boardContract) {
+        this.enemies.forEach(enemy => {
+            if (this.gameMode == GAME_MODE.OFFLINE) {
+                enemy.initOfflineStats();
+            }
+            if (this.gameMode == GAME_MODE.ONLINE) {
+                enemy.initStats(this.board);
+            }
+        });
+
+        if (this.gameMode == GAME_MODE.OFFLINE)
+            this.turnsRemaining = 50;
+        //TODO
+        if (this.gameMode == GAME_MODE.ONLINE)
+            this.turnsRemaining = 50;
+    }
+
+    getOfflineAvatar() {
+        return JSON.parse(
+            '[{"id":"0x0","fields":{"name":"Alcibiades","description":"An avatar ready to fight moloch.","image":"ipfs://bafkreib4ftqeobfmdy7kvurixv55m7nqtvwj3o2hw3clsyo3hjpxwo3sda","attributes":[{"trait_type":"HP","value":3},{"trait_type":"AP","value":1},{"trait_type":"DP","value":0},{"trait_type":"Armor","value":"Worn Lab Coat"},{"trait_type":"Weapon","value":"Used Plasma Cutter"},{"trait_type":"Implant","value":"No Implant"},{"trait_type":"Experience","value":0}]}},0]'
+        );
+    }
+
+    getOfflineBoard() {
+        return {maxTurns: 50};
     }
 
     /////////EMBELLISHMENTS/////////
@@ -324,6 +518,13 @@ export class LabScene extends Phaser.Scene {
         };
     }
 
+    animateVictory() {
+        this.player.animateText("YOU HAVE VANQUISHED MOLOCH!", this.player.x, this.player.y, "#D4AF37", 50);
+    }
+
+    animateDefeat(turnsElapsed) {
+
+    }
     //////////DEBUG///////////////
 
     drawDebug () {

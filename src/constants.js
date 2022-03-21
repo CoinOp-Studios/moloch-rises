@@ -1,4 +1,15 @@
 export const Constants = {
+    /*************************
+     *******TRANSACTIONS******
+     ************************/
+    BLOCK_CONFIRMS: 5,
+    GAME_COST_ETHER: 0.001,
+    MINT_COST_ETHER: 0.001,
+
+
+
+
+
     /*/////////////////////////
     ////////////TEXT///////////
     /////////////////////////*/
@@ -14,5 +25,9 @@ export const Constants = {
     DEFAULT_FONT_SIZE: 12,
     DEFAULT_FONT: "Consolas",
     DEFAULT_FONT_COLOR: "#000000", // black
+
+    TURNS_REMAINING_FONT_SIZE_STRING: "40px",
+    TURNS_REMAINING_FONT_FAMILY: "source serif pro",
+    TURNS_REMAINING_TEXT: "TURNS REMAINING:",
 }
 Object.freeze(Constants);
