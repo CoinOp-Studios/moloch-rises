@@ -6604,6 +6604,11 @@ secp256k1@^4.0.1:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
 
+seeded-rand@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/seeded-rand/-/seeded-rand-2.0.1.tgz#5cd1867753a9b4f7054088f1b2577f245705a4fd"
+  integrity sha512-OoNSbS3HH7tFIcE3zsn9BkyfjV6Of4L8b0HZU69WiqOQsMTXBTe83MNnIxmgTx9ABmOoTBhPwst+SN96twgDvA==
+
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
