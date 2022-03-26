@@ -1,12 +1,11 @@
 import Phaser from 'phaser';
 
-import molochJson from './assets/moloch.json';
 import flaresJson from './assets/particles/flares.json';
 import flares from './assets/particles/flares.png';
 import sparklePng from './assets/particles/sparkle1.png'
 import scientist_game from './assets/sprites/scientist_game.png';
 import { VIEWPORT_WIDTH } from './constants';
-import { getOwnedAvatars, mintAvatar, getBoardContract } from './contractAbi';
+import { getBoardContract, getOwnedAvatars, mintAvatar } from './contractAbi';
 import { connect } from './wallet';
 
 const BUTTON_FRAMES = {
@@ -54,7 +53,7 @@ export class WalletScene extends Phaser.Scene {
         this.load.atlas('flares', flares, flaresJson);
         this.load.image('spark', sparklePng);
         this.load.image('scientist', scientist_game);
-        this.load.multiatlas('ui', molochJson, './assets');
+        this.load.multiatlas('ui', 'assets/moloch.json', 'assets');
     }
 
     create() {
@@ -271,7 +270,7 @@ export class WalletScene extends Phaser.Scene {
     }
 
     onOfflineOver(button) {
-        if(!this.currentAvatar){
+        if (!this.currentAvatar) {
             this.sprites.tooltip = this.add.sprite(-1000, -1000, 'ui', 'tiles/tooltip/top-left-gold');
             const { offlineButton, tooltip } = this.sprites;
             const tX = offlineButton.x + tooltip.width / 3 * 1.6;
@@ -321,7 +320,7 @@ export class WalletScene extends Phaser.Scene {
                 this.retrievingBoardState = false;
             });
         }
-        
+
         this.makePlayerButtonInteractive(this.sprites.playerButton);
         provider.listAccounts().then((accounts) => {
             if (!accounts) {
