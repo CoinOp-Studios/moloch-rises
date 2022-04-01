@@ -31,18 +31,19 @@ export async function getTokens(provider, address) {
   const network = await provider.getNetwork();
   const chainId = `0x${network.chainId.toString(16)}`;
   const endpoint = GRAPH_ENDPOINTS[chainId];
-  const query = gql`
- query UserTokens($owner: String!) {
-  tokens(owner: $owner) {
-    id,
-    owner,
-    uri
+  const tokenQuery = gql`
+  query TokensOwnedBy($ownerid: String!) {
+    owner(id: $ownerid) {
+      ownedTokens {
+        id
+        uri
+      }
+   }
   }
-}
-`;
-  const data = await request(endpoint, query, { owner: address });
+  `
+  const data = await request(endpoint, tokenQuery, { ownerid: address.toLowerCase() });
   console.log('data', data);
-  const avatars = data.tokens.map(token => {
+  const avatars = data.owner.ownedTokens.map(token => {
     const uri = token.uri || "";
     let fields = {};
     const parts = uri.split("base64,")

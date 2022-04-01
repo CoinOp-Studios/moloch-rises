@@ -118,7 +118,7 @@ export class WalletScene extends Phaser.Scene {
         };
 
         document.getElementById('avatar-select-close').addEventListener('click', () => {
-            this.hideAvatarSelect();
+            this.toggleAvatarSelect(false);
         });
 
         document.getElementById('avatar-mint').addEventListener('click', () => {
